@@ -2,8 +2,14 @@
   "name": "StandartSoft Plus",
   "image": "oven/bun:1",
   "features": {
-    "ghcr.io/devcontainers/features/git:1": {}
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/sshd:1": {
+      "version": "latest"
+    }
   },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/bun/.ssh,type=bind,readonly"
+  ],
   "forwardPorts": [4321],
   "portsAttributes": {
     "4321": {
