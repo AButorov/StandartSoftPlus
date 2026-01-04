@@ -5,7 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://abutorov.github.io",
-  base: "/StandartSoftPlus",
+  base: "/StandartSoftPlus/",
 
   server: {
     host: "0.0.0.0",
