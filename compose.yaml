@@ -1,0 +1,14 @@
+services:
+  app:
+    image: oven/bun:1
+    container_name: astro-dev
+    # Важно: включаем режим polling для работы HMR на Mac
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "4321:4321"
+    # Команда держит контейнер запущенным
+    command: sh -c "bun install && bun run dev --host"
