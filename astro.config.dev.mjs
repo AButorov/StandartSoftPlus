@@ -1,11 +1,11 @@
-// astro.config.mjs
+// astro.config.dev.mjs
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://abutorov.github.io",
-  base: "/StandartSoftPlus",
+  base: "/",
 
   server: {
     host: "0.0.0.0",
