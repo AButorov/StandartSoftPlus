@@ -1,11 +1,562 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ProjectsList from '../components/ProjectsList.astro';
+
+const base = import.meta.env.BASE_URL;
+
+// Данные проектов
+const projects = [
+  {
+    id: 'job-1',
+    title: 'Гастроклиникс',
+    description: 'Цифровая экосистема для сети медицинских центров',
+    details: 'Комплексное решение: мобильное приложение для пациентов, веб-панель для администраторов, система записи и управления расписанием',
+    tags: ['Mobile', 'Healthcare', 'CRM'],
+    client: 'АО «Гастроклиникс»',
+    stack: 'JS/TS, Firebase/Supabase',
+    status: 'Сдан',
+    features: [
+      'Умная запись на приём',
+      'Цифровая медкарта',
+      'Административная панель',
+      'Управление расписанием'
+    ]
+  },
+  {
+    id: 'job-2',
+    title: 'Ваше такси',
+    description: 'Автоматизация диспетчерской службы и агрегатор такси',
+    details: 'Полная экосистема такси: приложения для пассажиров и водителей, веб-панель диспетчера с GPS-трекингом в реальном времени',
+    tags: ['Mobile', 'Taxi', 'Geolocation'],
+    client: 'Служба такси «Ваше такси»',
+    stack: 'iOS/Android, Web, Google Maps API',
+    status: 'Сдан',
+    features: [
+      'Приложение для пассажиров',
+      'Приложение для водителей',
+      'Диспетчерская панель',
+      'GPS-трекинг в реальном времени'
+    ]
+  }
+];
 ---
 
-<Layout title="Наши работы">
-	<h1>StandartSoft +</h1>
-	<h2>portfolio</h2>
-	<p>Здесь записи о проектах.</p>
-	<ProjectsList />
+<Layout title="Портфолио - StandartSoft Plus">
+  <!-- Hero секция -->
+  <section class="portfolio-hero">
+    <div class="container">
+      <h1>Наши проекты</h1>
+      <p class="lead">
+        Опыт разработки комплексных решений для различных отраслей бизнеса. 
+        От идеи до запуска в эксплуатацию.
+      </p>
+    </div>
+  </section>
+
+  <!-- Фильтры (для будущего расширения) -->
+  <section class="filters-section">
+    <div class="container">
+      <div class="filters">
+        <button class="filter-btn active">Все проекты</button>
+        <button class="filter-btn">Mobile</button>
+        <button class="filter-btn">Web</button>
+        <button class="filter-btn">Healthcare</button>
+        <button class="filter-btn">Transport</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Список проектов -->
+  <section class="projects-section">
+    <div class="container">
+      <div class="projects-grid">
+        {projects.map((project) => (
+          <article class="project-card">
+            <div class="project-card-header">
+              <h2>{project.title}</h2>
+              <p class="project-description">{project.description}</p>
+            </div>
+
+            <div class="project-card-body">
+              <p class="project-details">{project.details}</p>
+
+              <div class="project-features">
+                <h4>Основные возможности:</h4>
+                <ul>
+                  {project.features.map((feature) => (
+                    <li>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="project-meta">
+                <div class="meta-item">
+                  <span class="meta-label">Клиент:</span>
+                  <span class="meta-value">{project.client}</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Стек:</span>
+                  <span class="meta-value">{project.stack}</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Статус:</span>
+                  <span class="meta-value status-badge">{project.status}</span>
+                </div>
+              </div>
+
+              <div class="project-tags">
+                {project.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            </div>
+
+            <div class="project-card-footer">
+              <a href={`${base}jobs/${project.id}/`} class="btn btn-primary">
+                Подробнее о проекте →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Статистика -->
+  <section class="stats-section">
+    <div class="container">
+      <h2 class="text-center">В цифрах</h2>
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">2+</div>
+          <div class="stat-label">Года на рынке</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Реализованных проектов</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Сданных в срок</div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Поддержка проектов</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Процесс работы -->
+  <section class="process-section">
+    <div class="container-narrow">
+      <h2 class="text-center">Как мы работаем</h2>
+      
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-number">01</div>
+          <div class="step-content">
+            <h3>Анализ задачи</h3>
+            <p>Изучаем бизнес-процессы, формируем требования, определяем технологический стек</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">02</div>
+          <div class="step-content">
+            <h3>Проектирование</h3>
+            <p>Разрабатываем архитектуру, создаём прототипы интерфейсов, согласовываем решения</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">03</div>
+          <div class="step-content">
+            <h3>Разработка</h3>
+            <p>Итеративная разработка с регулярными демонстрациями прогресса и сбором обратной связи</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">04</div>
+          <div class="step-content">
+            <h3>Тестирование</h3>
+            <p>Комплексное тестирование функциональности, производительности и безопасности</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">05</div>
+          <div class="step-content">
+            <h3>Запуск</h3>
+            <p>Развёртывание в production, обучение пользователей, передача документации</p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">06</div>
+          <div class="step-content">
+            <h3>Поддержка</h3>
+            <p>Техническая поддержка, обновления, доработки и развитие функциональности</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container-narrow text-center">
+      <h2>Обсудим ваш проект?</h2>
+      <p class="slogan">Расскажите о своей идее, и мы предложим оптимальное решение</p>
+      <div class="cta-buttons">
+        <a href="#contact" class="btn btn-primary">Связаться с нами</a>
+        <a href={base} class="btn btn-secondary">На главную</a>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  /* Секции */
+  section {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .lead {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  /* Hero секция */
+  .portfolio-hero {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.03), rgba(229, 28, 39, 0.03));
+  }
+
+  .portfolio-hero h1 {
+    margin-bottom: var(--spacing-md);
+  }
+
+  /* Фильтры */
+  .filters-section {
+    background: white;
+    border-bottom: 1px solid rgba(61, 17, 57, 0.1);
+    padding: var(--spacing-lg) 0;
+  }
+
+  .filters {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .filter-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+    background: transparent;
+    color: var(--color-text-muted);
+    border: 1px solid rgba(61, 17, 57, 0.2);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+
+  .filter-btn:hover {
+    border-color: var(--color-secondary);
+    color: var(--color-secondary);
+  }
+
+  .filter-btn.active {
+    background: var(--gradient-brand);
+    color: white;
+    border-color: transparent;
+  }
+
+  /* Сетка проектов */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+  }
+
+  /* Карточка проекта */
+  .project-card {
+    background: white;
+    border: 1px solid rgba(61, 17, 57, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-secondary);
+  }
+
+  .project-card-header {
+    padding: var(--spacing-lg);
+    border-bottom: 2px solid var(--color-secondary);
+  }
+
+  .project-card-header h2 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .project-description {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .project-card-body {
+    padding: var(--spacing-lg);
+    flex: 1;
+  }
+
+  .project-details {
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+  }
+
+  .project-features {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .project-features h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .project-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .project-features li {
+    padding: var(--spacing-xs) 0;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .project-features li::before {
+    content: "✓ ";
+    color: var(--color-secondary);
+    font-weight: bold;
+    margin-right: var(--spacing-xs);
+  }
+
+  .project-meta {
+    background: rgba(61, 17, 57, 0.03);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .meta-item {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-xs) 0;
+    font-size: 0.9rem;
+  }
+
+  .meta-label {
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .meta-value {
+    color: var(--color-text-muted);
+  }
+
+  .status-badge {
+    background: var(--gradient-brand);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .project-tags {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+  }
+
+  .project-card-footer {
+    padding: var(--spacing-lg);
+    border-top: 1px solid rgba(61, 17, 57, 0.1);
+  }
+
+  .project-card-footer .btn {
+    width: 100%;
+  }
+
+  /* Статистика */
+  .stats-section {
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.03), rgba(229, 28, 39, 0.03));
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+  }
+
+  .stat-card {
+    text-align: center;
+    padding: var(--spacing-lg);
+  }
+
+  .stat-number {
+    font-family: var(--font-heading);
+    font-weight: 200;
+    font-size: 3.5rem;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .stat-label {
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* Процесс работы */
+  .process-section {
+    background: white;
+  }
+
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+  }
+
+  .process-step {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+  }
+
+  .step-number {
+    font-family: var(--font-heading);
+    font-weight: 200;
+    font-size: 3rem;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    flex-shrink: 0;
+    width: 80px;
+  }
+
+  .step-content h3 {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .step-content p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  /* CTA секция */
+  .cta-section {
+    background: var(--gradient-brand);
+    color: white;
+  }
+
+  .cta-section h2,
+  .cta-section .slogan {
+    color: white;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-top: var(--spacing-lg);
+    flex-wrap: wrap;
+  }
+
+  .cta-section .btn-primary {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .cta-section .btn-primary:hover {
+    background: var(--color-bg);
+    transform: scale(1.05);
+  }
+
+  .cta-section .btn-secondary {
+    border-color: white;
+    color: white;
+  }
+
+  .cta-section .btn-secondary:hover {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .process-step {
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .step-number {
+      font-size: 2rem;
+      width: auto;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>
