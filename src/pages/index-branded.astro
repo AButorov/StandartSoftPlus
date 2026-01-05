@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/hero.astro';
+---
+
+<Layout title="StandartSoft Plus - Разработка мобильных приложений">
+  <!-- Hero секция -->
+  <Hero 
+    title="StandartSoft +" 
+    slogan="Innovate with Confidence, Code with Standards!"
+  />
+
+  <!-- Услуги -->
+  <section id="services" class="services">
+    <div class="container">
+      <h2 class="text-center">Наши услуги</h2>
+      
+      <div class="services-grid">
+        <div class="card">
+          <h3>Мобильные приложения</h3>
+          <p>Разработка нативных и кросс-платформенных приложений для iOS и Android</p>
+          <a href="#contact" class="text-accent">Узнать больше →</a>
+        </div>
+        
+        <div class="card">
+          <h3>Веб-разработка</h3>
+          <p>Современные веб-приложения на React, Vue, Astro с акцентом на производительность</p>
+          <a href="#contact" class="text-accent">Узнать больше →</a>
+        </div>
+        
+        <div class="card">
+          <h3>UI/UX дизайн</h3>
+          <p>Интерактивный дизайн с фокусом на пользовательский опыт</p>
+          <a href="#contact" class="text-accent">Узнать больше →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Преимущества -->
+  <section class="benefits">
+    <div class="container-narrow">
+      <h2 class="text-center">Почему выбирают нас</h2>
+      
+      <div class="benefits-list">
+        <div class="benefit-item">
+          <span class="benefit-icon">✓</span>
+          <div>
+            <h3>Стандарты качества</h3>
+            <p>Следуем лучшим практикам разработки и современным стандартам кода</p>
+          </div>
+        </div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">✓</span>
+          <div>
+            <h3>Инновационный подход</h3>
+            <p>Используем передовые технологии и методологии</p>
+          </div>
+        </div>
+        
+        <div class="benefit-item">
+          <span class="benefit-icon">✓</span>
+          <div>
+            <h3>Прозрачность процесса</h3>
+            <p>Постоянная связь с клиентом на всех этапах разработки</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container-narrow text-center">
+      <h2>Готовы начать проект?</h2>
+      <p class="slogan">Свяжитесь с нами для обсуждения вашей идеи</p>
+      <a href="#contact" class="btn btn-primary">Связаться с нами</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Секции */
+  section {
+    padding: var(--spacing-xl) 0;
+  }
+
+  /* Сетка услуг */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+  }
+
+  /* Преимущества */
+  .benefits {
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.03), rgba(229, 28, 39, 0.03));
+  }
+
+  .benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+  }
+
+  .benefit-item {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+  }
+
+  .benefit-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-brand);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  /* CTA секция */
+  .cta-section {
+    background: var(--gradient-brand);
+    color: white;
+  }
+
+  .cta-section h2,
+  .cta-section .slogan {
+    color: white;
+  }
+
+  .cta-section .btn-primary {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .cta-section .btn-primary:hover {
+    background: var(--color-bg);
+    transform: scale(1.05);
+  }
+</style>
