@@ -1,43 +1,94 @@
-# Astro Starter Kit: Minimal
+# StandartSoft Plus
 
-```sh
-bun create astro@latest -- --template minimal
+Сайт-визитка студии разработки мобильного программного обеспечения с функциями привлечения клиентов и интерактивного взаимодействия.
+
+## Технологии
+
+- **Framework:** Astro 5.16.6
+- **UI:** React 19.2.3
+- **Styling:** TailwindCSS 4.1.18
+- **Runtime:** Bun 1.x
+- **Dev Environment:** Docker + DevContainer
+
+## Требования
+
+- macOS (Apple M1/M2)
+- Docker Desktop
+- VSCode с расширением Dev Containers
+- Git
+
+## Установка и запуск
+
+### Локальная разработка (DevContainer)
+
+1. Открыть проект в VSCode
+2. Выполнить команду: `Dev Containers: Reopen in Container`
+3. Дождаться автоматической установки зависимостей
+
+Сервер запускается автоматически на `http://localhost:4321`
+
+### Альтернативный запуск (Docker Compose)
+
+```bash
+docker compose up
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Запуск без Docker
 
-## 🚀 Project Structure
+```bash
+bun install
+bun dev
+```
 
-Inside of your Astro project, you'll see the following folders and files:
+## Команды
 
-```text
-/
-├── public/
+| Команда       | Описание                      |
+| ------------- | ----------------------------- |
+| `bun dev`     | Запуск dev-сервера с HMR      |
+| `bun build`   | Сборка продакшн-версии        |
+| `bun preview` | Предпросмотр собранной версии |
+
+## Структура проекта
+
+```
+├── .devcontainer/          # Конфигурация DevContainer
 ├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/         # Astro/React компоненты
+│   ├── layouts/            # Шаблоны страниц
+│   ├── pages/              # Роутинг страниц
+│   └── styles/             # Глобальные стили
+├── public/                 # Статические файлы
+└── compose.yaml            # Docker Compose конфигурация
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Деплой
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Проект настроен для публикации на GitHub Pages:
 
-Any static assets, like images, can be placed in the `public/` directory.
+- **URL:** https://abutorov.github.io/StandartSoftPlus/
+- **Base Path:** `/StandartSoftPlus/`
 
-## 🧞 Commands
+### Команды деплоя
 
-All commands are run from the root of the project, from a terminal:
+```bash
+bun build
+# Загрузка dist/ на GitHub Pages
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
+## Особенности конфигурации
 
-## 👀 Want to learn more?
+### Docker окружение
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Включен polling для HMR на macOS (`CHOKIDAR_USEPOLLING=true`)
+- Порт 4321 пробрасывается на хост
+- SSH ключи монтируются для работы с Git
+
+### VSCode расширения
+
+- Astro Language Support
+- Prettier
+- TailwindCSS IntelliSense
+
+## Лицензия
+
+Проприетарный проект
