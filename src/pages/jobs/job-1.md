@@ -57,5 +57,5 @@ tags: ["mobile", "healthcare", "CRM"]
 ---
 
 **Клиент:** АО «Гастроклиникс» (г. Москва)  
-**Стек:** JS/TS, Firebase/Supabase, Cross-platform Mobile Dev  
+**Стек:** Dart/Flutter, JS/TS, Firebase/Supabase, Cross-platform Mobile Dev  
 **Статус:** Проект сдан и введен в эксплуатацию
