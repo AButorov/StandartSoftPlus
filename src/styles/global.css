@@ -1,1 +1,27 @@
+/* Импорт Tailwind CSS v4 */
 @import "tailwindcss";
+
+/* Кастомные CSS переменные */
+@import "./variables.css";
+
+/* Кастомная типографика (переопределяет/дополняет Tailwind) */
+@import "./typography.css";
+
+/* Дополнительные глобальные стили */
+nav {
+  background: var(--color-bg-secondary);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+nav a {
+  margin-right: var(--spacing-md);
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: var(--color-primary);
+}
