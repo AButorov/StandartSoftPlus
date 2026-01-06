@@ -1,13 +1,18 @@
 ---
-layout: ../../layouts/MarkdownLayout.astro
 title: "Гастроклиникс"
-pubDate: 2025-06-01
 description: "Цифровая экосистема для сети медицинских центров"
-author: "StandartSoft+"
-image:
-  url: "https://docs.astro.build/assets/rose.webp"
-  alt: "Логотип будет позже."
-tags: ["mobile", "healthcare", "CRM"]
+details: "Комплексное решение: мобильное приложение для пациентов, веб-панель для администраторов, система записи и управления расписанием"
+tags: ["Mobile", "Healthcare", "CRM"]
+client: "АО «Гастроклиникс»"
+stack: "Dart/Flutter, JS/TS, Supabase"
+status: "Сдан"
+features:
+  - "Умная запись на приём"
+  - "Цифровая медкарта"
+  - "Административная панель"
+  - "Управление расписанием"
+order: 1
+pubDate: "2025-06-01"
 ---
 
 ## Задача бизнеса
@@ -57,5 +62,5 @@ tags: ["mobile", "healthcare", "CRM"]
 ---
 
 **Клиент:** АО «Гастроклиникс» (г. Москва)  
-**Стек:** Dart/Flutter, JS/TS, Firebase/Supabase, Cross-platform Mobile Dev  
+**Стек:** Dart/Flutter, JS/TS, Supabase  
 **Статус:** Проект сдан и введен в эксплуатацию

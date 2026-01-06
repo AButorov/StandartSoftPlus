@@ -1,0 +1,280 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+  const jobs = await getCollection('jobs');
+  return jobs.map((job: CollectionEntry<'jobs'>) => ({
+    params: { slug: job.slug },
+    props: { job },
+  }));
+}
+
+interface Props {
+  job: CollectionEntry<'jobs'>;
+}
+
+const { job } = Astro.props;
+const { Content } = await job.render();
+const { title, description, tags, pubDate } = job.data;
+
+// Форматирование даты с проверкой
+const formattedDate = pubDate 
+  ? new Date(pubDate).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+---
+
+<Layout title={`${title} - StandartSoft Plus`}>
+  <!-- Hero секция проекта -->
+  <section class="project-hero">
+    <div class="container-narrow">
+      <div class="breadcrumb">
+        <a href={`${base}portfolio/`}>← Портфолио</a>
+      </div>
+      
+      <h1>{title}</h1>
+      <p class="lead">{description}</p>
+      
+      {formattedDate && (
+        <div class="meta-info">
+          <span class="date">{formattedDate}</span>
+          <span class="separator">•</span>
+          <span class="author">STANDARTSOFT+</span>
+        </div>
+      )}
+      
+      <div class="project-tags">
+        {tags.map((tag: string) => (
+          <span class="tag">{tag.toUpperCase()}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Контент из Markdown -->
+  <section class="project-content">
+    <div class="container">
+      <article class="markdown-content">
+        <Content />
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container-narrow text-center">
+      <h2>Обсудим ваш проект?</h2>
+      <p class="slogan">Расскажите о своей идее, и мы предложим оптимальное решение</p>
+      <div class="cta-buttons">
+        <a href="#contact" class="btn btn-primary">Связаться с нами</a>
+        <a href={`${base}portfolio/`} class="btn btn-secondary">← Все проекты</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Секции */
+  section {
+    padding: var(--spacing-xl) 0;
+  }
+
+  /* Hero секция проекта */
+  .project-hero {
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.03), rgba(229, 28, 39, 0.03));
+    padding: var(--spacing-xl) 0;
+    border-bottom: 2px solid var(--color-secondary);
+  }
+
+  .breadcrumb {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+    transition: color var(--transition-base);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-secondary);
+  }
+
+  .project-hero h1 {
+    margin-bottom: var(--spacing-sm);
+    font-size: 3.5rem;
+  }
+
+  .lead {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .meta-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .meta-info .separator {
+    color: var(--color-secondary);
+  }
+
+  .meta-info .author {
+    font-weight: 700;
+  }
+
+  .project-tags {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+    background: var(--gradient-brand);
+    color: white;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+  }
+
+  .tag:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Контент проекта */
+  .project-content {
+    background: white;
+    padding: var(--spacing-xl) 0;
+  }
+
+  .markdown-content {
+    max-width: 100%;
+  }
+
+  /* Стили для Markdown контента */
+  .markdown-content :global(h2) {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 2px solid var(--color-secondary);
+    font-size: 2rem;
+  }
+
+  .markdown-content :global(h3) {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-primary);
+    font-size: 1.5rem;
+  }
+
+  .markdown-content :global(h4) {
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+  }
+
+  .markdown-content :global(p) {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.7;
+  }
+
+  .markdown-content :global(ul),
+  .markdown-content :global(ol) {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+  }
+
+  .markdown-content :global(li) {
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.6;
+  }
+
+  .markdown-content :global(strong) {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .markdown-content :global(hr) {
+    margin: var(--spacing-xl) 0;
+    border: none;
+    border-top: 1px solid rgba(61, 17, 57, 0.1);
+  }
+
+  /* CTA секция */
+  .cta-section {
+    background: var(--gradient-brand);
+    color: white;
+  }
+
+  .cta-section h2,
+  .cta-section .slogan {
+    color: white;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-top: var(--spacing-lg);
+    flex-wrap: wrap;
+  }
+
+  .cta-section .btn-primary {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .cta-section .btn-primary:hover {
+    background: var(--color-bg);
+    transform: scale(1.05);
+  }
+
+  .cta-section .btn-secondary {
+    border-color: white;
+    color: white;
+  }
+
+  .cta-section .btn-secondary:hover {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .project-hero h1 {
+      font-size: 2.5rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>

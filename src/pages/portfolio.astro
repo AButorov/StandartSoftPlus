@@ -1,43 +1,18 @@
 ---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
 const base = import.meta.env.BASE_URL;
 
-// Данные проектов
-const projects = [
-  {
-    id: 'job-1',
-    title: 'Гастроклиникс',
-    description: 'Цифровая экосистема для сети медицинских центров',
-    details: 'Комплексное решение: мобильное приложение для пациентов, веб-панель для администраторов, система записи и управления расписанием',
-    tags: ['Mobile', 'Healthcare', 'CRM'],
-    client: 'АО «Гастроклиникс»',
-    stack: 'JS/TS, Firebase/Supabase',
-    status: 'Сдан',
-    features: [
-      'Умная запись на приём',
-      'Цифровая медкарта',
-      'Административная панель',
-      'Управление расписанием'
-    ]
-  },
-  {
-    id: 'job-2',
-    title: 'Ваше такси',
-    description: 'Автоматизация диспетчерской службы и агрегатор такси',
-    details: 'Полная экосистема такси: приложения для пассажиров и водителей, веб-панель диспетчера с GPS-трекингом в реальном времени',
-    tags: ['Mobile', 'Taxi', 'Geolocation'],
-    client: 'Служба такси «Ваше такси»',
-    stack: 'iOS/Android, Web, Google Maps API',
-    status: 'Сдан',
-    features: [
-      'Приложение для пассажиров',
-      'Приложение для водителей',
-      'Диспетчерская панель',
-      'GPS-трекинг в реальном времени'
-    ]
-  }
-];
+// Получаем проекты из Content Collection
+const allJobs = await getCollection('jobs');
+const projects = allJobs
+  .sort((a: CollectionEntry<'jobs'>, b: CollectionEntry<'jobs'>) => a.data.order - b.data.order)
+  .map((job: CollectionEntry<'jobs'>) => ({
+    id: job.slug,
+    ...job.data
+  }));
 ---
 
 <Layout title="Портфолио - StandartSoft Plus">
@@ -69,7 +44,7 @@ const projects = [
   <section class="projects-section">
     <div class="container">
       <div class="projects-grid">
-        {projects.map((project) => (
+        {projects.map((project: any) => (
           <article class="project-card">
             <div class="project-card-header">
               <h2>{project.title}</h2>
@@ -82,7 +57,7 @@ const projects = [
               <div class="project-features">
                 <h4>Основные возможности:</h4>
                 <ul>
-                  {project.features.map((feature) => (
+                  {project.features.map((feature: string) => (
                     <li>{feature}</li>
                   ))}
                 </ul>
@@ -104,7 +79,7 @@ const projects = [
               </div>
 
               <div class="project-tags">
-                {project.tags.map((tag) => (
+                {project.tags.map((tag: string) => (
                   <span class="tag">{tag}</span>
                 ))}
               </div>

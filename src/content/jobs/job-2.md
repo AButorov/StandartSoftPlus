@@ -1,13 +1,18 @@
 ---
-layout: ../../layouts/MarkdownLayout.astro
 title: "Ваше такси"
-pubDate: 2025-06-01
-description: "Автоматизация диспетчерской службы и запуск агрегатора такси"
-author: "StandartSoft+"
-image:
-  url: "https://docs.astro.build/assets/rose.webp"
-  alt: "Логотип будет позже."
-tags: ["mobile", "taxi", "geolocation"]
+description: "Автоматизация диспетчерской службы и агрегатор такси"
+details: "Полная экосистема такси: приложения для пассажиров и водителей, веб-панель диспетчера с GPS-трекингом в реальном времени"
+tags: ["Mobile", "Taxi", "Geolocation"]
+client: "Служба такси «Ваше такси»"
+stack: "Dart/Flutter, JS/TS, Firebase"
+status: "Сдан"
+features:
+  - "Приложение для пассажиров"
+  - "Приложение для водителей"
+  - "Диспетчерская панель"
+  - "GPS-трекинг в реальном времени"
+order: 2
+pubDate: "2025-06-01"
 ---
 
 ## Задача бизнеса
@@ -74,5 +79,5 @@ tags: ["mobile", "taxi", "geolocation"]
 ---
 
 **Клиент:** Служба такси «Ваше такси» (г. Петушки)  
-**Стек:** iOS/Android, Web, Google Maps API, Firebase  
+**Стек:** Dart/Flutter, JS/TS, Firebase  
 **Статус:** Проект сдан, система введена в эксплуатацию
