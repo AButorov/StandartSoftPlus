@@ -1,0 +1,92 @@
+/* Выравнивание изображений в markdown */
+
+/* Выравнивание по центру */
+.img-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Выравнивание по левому краю с обтеканием текстом */
+.img-left {
+  float: left;
+  margin: 0 1.5rem 1rem 0;
+  max-width: 50%;
+  height: auto;
+}
+
+/* Выравнивание по правому краю с обтеканием текстом */
+.img-right {
+  float: right;
+  margin: 0 0 1rem 1.5rem;
+  max-width: 50%;
+  height: auto;
+}
+
+/* Контейнер для размещения изображений рядом */
+.img-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.img-row img {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Два изображения рядом */
+.img-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.img-row-2 img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Три изображения рядом */
+.img-row-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.img-row-3 img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Очистка float */
+.clear {
+  clear: both;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .img-left,
+  .img-right {
+    float: none;
+    max-width: 100%;
+    margin: 1rem 0;
+  }
+
+  .img-row-2,
+  .img-row-3 {
+    grid-template-columns: 1fr;
+  }
+}

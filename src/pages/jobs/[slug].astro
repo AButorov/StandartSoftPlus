@@ -21,13 +21,11 @@ const { job } = Astro.props;
 const { Content } = await job.render();
 const { title, description, tags, pubDate } = job.data;
 
-// Форматирование даты с проверкой
 const formattedDate = pubDate 
   ? new Date(pubDate).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
 ---
 
 <Layout title={`${title} - StandartSoft Plus`}>
-  <!-- Hero секция проекта -->
   <section class="project-hero">
     <div class="container-narrow">
       <div class="breadcrumb">
@@ -53,16 +51,14 @@ const formattedDate = pubDate
     </div>
   </section>
 
-  <!-- Контент из Markdown -->
   <section class="project-content">
     <div class="container">
-      <article class="markdown-content">
+      <article class="markdown-content" data-base-path={base}>
         <Content />
       </article>
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="cta-section">
     <div class="container-narrow text-center">
       <h2>Обсудим ваш проект?</h2>
@@ -75,13 +71,32 @@ const formattedDate = pubDate
   </section>
 </Layout>
 
+<!-- Скрипт для автоматического добавления base к путям изображений -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const article = document.querySelector('.markdown-content');
+    if (!article) return;
+    
+    const basePath = article.getAttribute('data-base-path') || '/';
+    
+    // Обрабатываем все img теги
+    const images = article.querySelectorAll('img');
+    images.forEach((img) => {
+      const src = img.getAttribute('src');
+      if (src && src.startsWith('/images/')) {
+        // Добавляем base только если путь начинается с /images/
+        const newSrc = basePath + src.substring(1); // убираем первый слеш
+        img.setAttribute('src', newSrc);
+      }
+    });
+  });
+</script>
+
 <style>
-  /* Секции */
   section {
     padding: var(--spacing-xl) 0;
   }
 
-/* Hero секция проекта */
   .project-hero {
     background: linear-gradient(135deg, rgba(61, 17, 57, 0.03), rgba(229, 28, 39, 0.03));
     padding: 3rem 0;
@@ -160,7 +175,6 @@ const formattedDate = pubDate
     box-shadow: var(--shadow-md);
   }
 
-  /* Контент проекта */
   .project-content {
     background: white;
     padding: var(--spacing-lg) 0 var(--spacing-xl);
@@ -170,7 +184,6 @@ const formattedDate = pubDate
     max-width: 100%;
   }
 
-  /* Стили для Markdown контента */
   .markdown-content :global(h2) {
     margin-top: var(--spacing-xl);
     margin-bottom: var(--spacing-md);
@@ -222,7 +235,6 @@ const formattedDate = pubDate
     border-top: 1px solid rgba(61, 17, 57, 0.1);
   }
 
-/* CTA секция */
   .cta-section {
     background: var(--gradient-brand);
     color: white;
@@ -268,7 +280,6 @@ const formattedDate = pubDate
     color: var(--color-primary);
   }
 
-  /* Адаптивность */
   @media (max-width: 768px) {
     .project-hero h1 {
       font-size: 2.5rem;
