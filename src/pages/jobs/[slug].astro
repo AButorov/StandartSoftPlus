@@ -81,15 +81,15 @@ const formattedDate = pubDate
     padding: var(--spacing-xl) 0;
   }
 
-  /* Hero секция проекта */
+/* Hero секция проекта */
   .project-hero {
     background: linear-gradient(135deg, rgba(61, 17, 57, 0.03), rgba(229, 28, 39, 0.03));
-    padding: var(--spacing-xl) 0;
+    padding: 3rem 0;
     border-bottom: 2px solid var(--color-secondary);
   }
 
   .breadcrumb {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 1.5rem;
   }
 
   .breadcrumb a {
@@ -109,20 +109,20 @@ const formattedDate = pubDate
 
   .project-hero h1 {
     margin-bottom: var(--spacing-sm);
-    font-size: 3.5rem;
+    font-size: 2.8rem;
   }
 
   .lead {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     color: var(--color-text-muted);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: 0.75rem;
   }
 
   .meta-info {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: 0.75rem;
     font-size: 0.9rem;
     color: var(--color-text-muted);
   }
@@ -163,9 +163,9 @@ const formattedDate = pubDate
   /* Контент проекта */
   .project-content {
     background: white;
-    padding: var(--spacing-xl) 0;
+    padding: var(--spacing-lg) 0 var(--spacing-xl);
   }
-
+ 
   .markdown-content {
     max-width: 100%;
   }
@@ -222,22 +222,29 @@ const formattedDate = pubDate
     border-top: 1px solid rgba(61, 17, 57, 0.1);
   }
 
-  /* CTA секция */
+/* CTA секция */
   .cta-section {
     background: var(--gradient-brand);
     color: white;
+    padding: 3rem 0;
   }
 
-  .cta-section h2,
+  .cta-section h2 {
+    color: white;
+    margin-bottom: 0.75rem;
+    font-size: 2rem;
+  }
+
   .cta-section .slogan {
     color: white;
+    margin-bottom: 1.5rem;
   }
 
   .cta-buttons {
     display: flex;
     gap: var(--spacing-md);
     justify-content: center;
-    margin-top: var(--spacing-lg);
+    margin-top: 0;
     flex-wrap: wrap;
   }
 
