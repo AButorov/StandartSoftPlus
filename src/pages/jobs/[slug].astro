@@ -19,280 +19,370 @@ interface Props {
 
 const { job } = Astro.props;
 const { Content } = await job.render();
-const { title, description, tags, pubDate } = job.data;
-
-const formattedDate = pubDate 
-  ? new Date(pubDate).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
 ---
 
-<Layout title={`${title} - StandartSoft Plus`}>
-  <section class="project-hero">
-    <div class="container-narrow">
-      <div class="breadcrumb">
-        <a href={`${base}portfolio/`}>← Портфолио</a>
-      </div>
-      
-      <h1>{title}</h1>
-      <p class="lead">{description}</p>
-      
-      {formattedDate && (
-        <div class="meta-info">
-          <span class="date">{formattedDate}</span>
-          <span class="separator">•</span>
-          <span class="author">STANDARTSOFT+</span>
+<Layout title={`${job.data.title} - StandartSoft Plus`}>
+  <!-- Hero секция с асимметричным дизайном -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1>{job.data.title}</h1>
+        <p class="slogan">{job.data.description}</p>
+        <div class="project-meta-hero">
+          <div class="meta-badge">
+            <span class="meta-label">Клиент:</span>
+            <span class="meta-value">{job.data.client}</span>
+          </div>
+          <div class="meta-badge">
+            <span class="meta-label">Статус:</span>
+            <span class="meta-value status">{job.data.status}</span>
+          </div>
         </div>
-      )}
-      
-      <div class="project-tags">
-        {tags.map((tag: string) => (
-          <span class="tag">{tag.toUpperCase()}</span>
-        ))}
+      </div>
+      <div class="hero-decoration">
+        <div class="decoration-circle">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 4 12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="project-content">
-    <div class="container">
-      <article class="markdown-content" data-base-path={base}>
+  <!-- Основной контент -->
+  <section class="project-details">
+    <div class="project-container">
+      <div class="project-content">
         <Content />
-      </article>
+      </div>
     </div>
   </section>
 
-  <section class="cta-section">
-    <div class="container-narrow text-center">
-      <h2>Обсудим ваш проект?</h2>
-      <p class="slogan">Расскажите о своей идее, и мы предложим оптимальное решение</p>
-      <div class="cta-buttons">
-        <a href="#contact" class="btn btn-primary">Связаться с нами</a>
-        <a href={`${base}portfolio/`} class="btn btn-secondary">← Все проекты</a>
+  <!-- CTA блок -->
+  <section class="project-cta">
+    <div class="project-container">
+      <div class="cta-card">
+        <h2>Обсудим ваш проект?</h2>
+        <p>Расскажите о своей идее, и мы предложим оптимальное решение</p>
+        <a href={`${base}contacts/`} class="btn btn-primary">Связаться с нами</a>
       </div>
+    </div>
+  </section>
+
+  <!-- Навигация к другим проектам -->
+  <section class="project-navigation">
+    <div class="project-container">
+      <a href={`${base}portfolio/`} class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 12H5M5 12l7 7m-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Все проекты
+      </a>
     </div>
   </section>
 </Layout>
 
-<!-- Скрипт для автоматического добавления base к путям изображений -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const article = document.querySelector('.markdown-content');
-    if (!article) return;
-    
-    const basePath = article.getAttribute('data-base-path') || '/';
-    
-    // Обрабатываем все img теги
-    const images = article.querySelectorAll('img');
-    images.forEach((img) => {
-      const src = img.getAttribute('src');
-      if (src && src.startsWith('/images/')) {
-        // Добавляем base только если путь начинается с /images/
-        const newSrc = basePath + src.substring(1); // убираем первый слеш
-        img.setAttribute('src', newSrc);
-      }
-    });
-  });
-</script>
-
 <style>
-  section {
-    padding: var(--spacing-xl) 0;
+  /* Hero секция */
+  .hero-section {
+    padding: 5rem 2rem;
+    background: white;
+    position: relative;
+    overflow: hidden;
   }
 
-  .project-hero {
-    background: linear-gradient(135deg, rgba(61, 17, 57, 0.03), rgba(229, 28, 39, 0.03));
-    padding: 3rem 0;
-    border-bottom: 2px solid var(--color-secondary);
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.03), rgba(229, 28, 39, 0.05));
+    clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
   }
 
-  .breadcrumb {
-    margin-bottom: 1.5rem;
-  }
-
-  .breadcrumb a {
-    color: var(--color-text-muted);
-    text-decoration: none;
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-wide);
-    transition: color var(--transition-base);
-  }
-
-  .breadcrumb a:hover {
-    color: var(--color-secondary);
-  }
-
-  .project-hero h1 {
-    margin-bottom: var(--spacing-sm);
-    font-size: 2.8rem;
-  }
-
-  .lead {
-    font-size: 1.1rem;
-    color: var(--color-text-muted);
-    margin-bottom: 0.75rem;
-  }
-
-  .meta-info {
-    display: flex;
+  .hero-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
     align-items: center;
-    gap: var(--spacing-sm);
-    margin-bottom: 0.75rem;
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
   }
 
-  .meta-info .separator {
-    color: var(--color-secondary);
+  .hero-content {
+    text-align: left;
   }
 
-  .meta-info .author {
-    font-weight: 700;
+  h1 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 3.5rem;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    background: none;
+    -webkit-text-fill-color: var(--color-primary);
   }
 
-  .project-tags {
+  .slogan {
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    color: var(--color-text);
+    opacity: 0.8;
+    margin-bottom: 2rem;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  .project-meta-hero {
     display: flex;
-    gap: var(--spacing-xs);
+    gap: 1rem;
     flex-wrap: wrap;
   }
 
-  .tag {
-    display: inline-block;
-    padding: var(--spacing-xs) var(--spacing-md);
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-wide);
-    background: var(--gradient-brand);
-    color: white;
-    border-radius: var(--radius-md);
-    transition: all var(--transition-base);
+  .meta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(61, 17, 57, 0.05);
+    border-radius: 8px;
+    font-size: 0.9rem;
   }
 
-  .tag:hover {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-md);
+  .meta-label {
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .meta-value {
+    color: var(--color-text);
+    opacity: 0.8;
+  }
+
+  .meta-value.status {
+    background: var(--gradient-brand);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .hero-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .decoration-circle {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 60px rgba(61, 17, 57, 0.2);
+    position: relative;
+  }
+
+  .decoration-circle::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid var(--color-secondary);
+    opacity: 0.3;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 0;
+    }
+  }
+
+  .decoration-circle svg {
+    width: 100px;
+    height: 100px;
+    color: white;
+  }
+
+  /* Основной контент - ШИРОКИЙ */
+  .project-details {
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.02), rgba(229, 28, 39, 0.02));
+  }
+
+  .project-container {
+    max-width: 1100px; /* УВЕЛИЧЕНО с 900px */
+    margin: 0 auto;
+    padding: 0 2rem;
   }
 
   .project-content {
     background: white;
-    padding: var(--spacing-lg) 0 var(--spacing-xl);
-  }
- 
-  .markdown-content {
-    max-width: 100%;
+    padding: 2.5rem; /* Оптимальный padding */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(61, 17, 57, 0.08);
+    width: 100%;
   }
 
-  .markdown-content :global(h2) {
-    margin-top: var(--spacing-xl);
-    margin-bottom: var(--spacing-md);
-    padding-bottom: var(--spacing-xs);
-    border-bottom: 2px solid var(--color-secondary);
+  /* CTA блок */
+  .project-cta {
+    padding: 2rem;
+    background: white;
+  }
+
+  .cta-card {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent-1));
+    color: white;
+    padding: 3rem;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .cta-card h2 {
+    font-family: var(--font-heading);
+    font-weight: 300;
     font-size: 2rem;
+    color: white;
+    margin-bottom: 1rem;
+    background: none;
+    -webkit-text-fill-color: white;
   }
 
-  .markdown-content :global(h3) {
-    margin-top: var(--spacing-lg);
-    margin-bottom: var(--spacing-sm);
-    color: var(--color-primary);
-    font-size: 1.5rem;
+  .cta-card p {
+    color: white;
+    opacity: 0.95;
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
   }
 
-  .markdown-content :global(h4) {
-    margin-top: var(--spacing-md);
-    margin-bottom: var(--spacing-xs);
-    font-size: 0.9rem;
+  .btn {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    font-family: var(--font-body);
     font-weight: 700;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-wide);
-  }
-
-  .markdown-content :global(p) {
-    margin-bottom: var(--spacing-md);
-    line-height: 1.7;
-  }
-
-  .markdown-content :global(ul),
-  .markdown-content :global(ol) {
-    margin-bottom: var(--spacing-md);
-    padding-left: var(--spacing-lg);
-  }
-
-  .markdown-content :global(li) {
-    margin-bottom: var(--spacing-xs);
-    line-height: 1.6;
-  }
-
-  .markdown-content :global(strong) {
-    color: var(--color-primary);
-    font-weight: 700;
-  }
-
-  .markdown-content :global(hr) {
-    margin: var(--spacing-xl) 0;
     border: none;
-    border-top: 1px solid rgba(61, 17, 57, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.95rem;
   }
 
-  .cta-section {
-    background: var(--gradient-brand);
-    color: white;
-    padding: 3rem 0;
-  }
-
-  .cta-section h2 {
-    color: white;
-    margin-bottom: 0.75rem;
-    font-size: 2rem;
-  }
-
-  .cta-section .slogan {
-    color: white;
-    margin-bottom: 1.5rem;
-  }
-
-  .cta-buttons {
-    display: flex;
-    gap: var(--spacing-md);
-    justify-content: center;
-    margin-top: 0;
-    flex-wrap: wrap;
-  }
-
-  .cta-section .btn-primary {
+  .btn-primary {
     background: white;
     color: var(--color-primary);
   }
 
-  .cta-section .btn-primary:hover {
-    background: var(--color-bg);
-    transform: scale(1.05);
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
   }
 
-  .cta-section .btn-secondary {
-    border-color: white;
-    color: white;
-  }
-
-  .cta-section .btn-secondary:hover {
+  /* Навигация */
+  .project-navigation {
+    padding: 2rem;
     background: white;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-secondary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .back-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .back-link:hover {
+    gap: 1rem;
     color: var(--color-primary);
   }
 
+  /* Адаптивность */
   @media (max-width: 768px) {
-    .project-hero h1 {
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-content {
+      text-align: center;
+    }
+
+    h1 {
       font-size: 2.5rem;
     }
 
-    .cta-buttons {
-      flex-direction: column;
-      align-items: center;
+    .slogan {
+      font-size: 1.125rem;
     }
 
-    .cta-buttons .btn {
-      width: 100%;
-      max-width: 300px;
+    .project-meta-hero {
+      justify-content: center;
+    }
+
+    .decoration-circle {
+      width: 150px;
+      height: 150px;
+    }
+
+    .decoration-circle svg {
+      width: 75px;
+      height: 75px;
+    }
+
+    .project-container {
+      padding: 0 1rem;
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    .cta-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .cta-card h2 {
+      font-size: 1.5rem;
+    }
+
+    .cta-card p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .project-container {
+      max-width: 100%;
+      padding: 0 2rem;
+    }
+
+    .project-content {
+      padding: 2rem;
     }
   }
 </style>
