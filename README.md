@@ -1,7 +1,8 @@
 # StandartSoft Plus
 
 Сайт-визитка студии разработки мобильного программного обеспечения с функциями привлечения клиентов и интерактивного взаимодействия.
-`https://abutorov.github.io/StandartSoftPlus/`
+
+**Демо:** https://abutorov.github.io/StandartSoftPlus/
 
 ## Технологии
 
@@ -9,18 +10,19 @@
 - **UI:** React 19.2.3
 - **Styling:** TailwindCSS 4.1.18
 - **Runtime:** Bun 1.x
-- **Dev Environment:** Docker + DevContainer
+- **Deployment:** GitHub Pages + GitHub Actions
+- **Dev Environment:** Docker + DevContainer (macOS Apple Silicon)
 
 ## Требования
 
-- macOS (Apple M1/M2)
+- macOS (Apple M1/M2/M3)
 - Docker Desktop
 - VSCode с расширением Dev Containers
 - Git
 
 ## Установка и запуск
 
-### Локальная разработка (DevContainer)
+### Локальная разработка (DevContainer) — рекомендуется
 
 1. Открыть проект в VSCode
 2. Выполнить команду: `Dev Containers: Reopen in Container`
@@ -34,6 +36,8 @@
 docker compose up
 ```
 
+Сервер будет доступен на `http://localhost:4321`
+
 ### Запуск без Docker
 
 ```bash
@@ -43,46 +47,135 @@ bun dev
 
 ## Команды
 
-| Команда       | Описание                      |
-| ------------- | ----------------------------- |
-| `bun dev`     | Запуск dev-сервера с HMR      |
-| `bun build`   | Сборка продакшн-версии        |
-| `bun preview` | Предпросмотр собранной версии |
+| Команда       | Описание                                                   |
+| ------------- | ---------------------------------------------------------- |
+| `bun dev`     | Запуск dev-сервера с HMR (использует astro.config.dev.mjs) |
+| `bun build`   | Сборка продакшн-версии (использует astro.config.mjs)       |
+| `bun preview` | Предпросмотр собранной версии                              |
 
 ## Структура проекта
 
 ```
-├── .devcontainer/          # Конфигурация DevContainer
+├── .devcontainer/           # Конфигурация DevContainer
+├── .github/workflows/       # GitHub Actions для CI/CD
+│   └── deploy.yml           # Автоматический деплой на GitHub Pages
 ├── src/
-│   ├── components/         # Astro/React компоненты
-│   ├── layouts/            # Шаблоны страниц
-│   ├── pages/              # Роутинг страниц
-│   └── styles/             # Глобальные стили
-├── public/                 # Статические файлы
-└── compose.yaml            # Docker Compose конфигурация
+│   ├── components/          # Astro/React компоненты
+│   │   ├── FloatingNav.astro    # Плавающая навигация с glassmorphism
+│   │   ├── ProjectsList.astro   # Список проектов портфолио
+│   │   └── hero.astro           # Hero секция главной страницы
+│   ├── content/             # Astro Content Collections
+│   │   ├── config.ts        # Схема валидации контента
+│   │   └── jobs/            # Markdown файлы проектов
+│   │       ├── job-1.md
+│   │       └── job-2.md
+│   ├── layouts/             # Шаблоны страниц
+│   │   ├── Layout.astro     # Базовый layout
+│   │   └── MarkdownLayout.astro # Layout для markdown страниц
+│   ├── pages/               # Роутинг страниц
+│   │   ├── index.astro      # Главная страница
+│   │   ├── portfolio.astro  # Страница портфолио
+│   │   ├── jobs/[slug].astro # Динамические страницы проектов
+│   │   ├── contacts/        # Страница контактов
+│   │   ├── services/        # Страница услуг
+│   │   ├── faq/             # Страница FAQ
+│   │   ├── documents/       # Документы
+│   │   └── resources/       # Ресурсы
+│   └── styles/              # Глобальные стили
+│       ├── global.css       # Основные стили + импорты
+│       ├── variables.css    # CSS переменные бренда
+│       ├── typography.css   # Типографика
+│       └── markdown-images.css # Стили для изображений в markdown
+├── public/                  # Статические файлы
+│   ├── images/
+│   │   └── projects/        # Изображения проектов
+│   │       ├── job-1/       # Папка для каждого проекта
+│   │       └── job-2/
+│   ├── favicon.ico
+│   ├── icon-nav.png         # Иконка для навигации
+│   └── ...                  # Другие статические ресурсы
+├── astro.config.mjs         # Продакшн конфигурация (base: /StandartSoftPlus/)
+├── astro.config.dev.mjs     # Dev конфигурация (base: /)
+├── compose.yaml             # Docker Compose конфигурация
+├── brandbook.md             # Брендбук проекта
+└── how_add_content.md       # Инструкция по добавлению контента
 ```
+
+## Управление контентом
+
+### Добавление проектов
+
+Все проекты управляются через Astro Content Collections. Подробная инструкция: [how_add_content.md](./how_add_content.md)
+
+**Быстрый старт:**
+
+1. Создать файл `src/content/jobs/job-X.md`
+2. Заполнить метаданные (title, description, tags, features, order)
+3. Добавить изображения в `public/images/projects/job-X/`
+4. Использовать HTML классы для продвинутых макетов изображений
+
+**Поддерживаемые макеты изображений:**
+
+- По центру: `class="img-center"`
+- С обтеканием слева: `class="img-left"`
+- С обтеканием справа: `class="img-right"`
+- Два изображения рядом: `<div class="img-row-2">`
+- Три изображения рядом: `<div class="img-row-3">`
+
+### Брендинг
+
+Цвета, шрифты, градиенты и CSS переменные описаны в [brandbook.md](./brandbook.md)
+
+**Основные цвета:**
+
+- Primary: `#3d1139` (темный сливовый)
+- Secondary: `#e51c27` (красный)
+- Градиент бренда: `linear-gradient(90deg, #3d1139 0%, #3d1139 66%, #e51c27 67%, #e51c27 100%)`
+
+**Шрифты:**
+
+- Заголовки: Montserrat (Extra Light 200)
+- Основной текст: Roboto Condensed (Regular 400)
 
 ## Деплой
 
-Проект настроен для публикации на GitHub Pages:
+Проект автоматически публикуется на GitHub Pages при push в ветку `main`:
 
 - **URL:** https://abutorov.github.io/StandartSoftPlus/
 - **Base Path:** `/StandartSoftPlus/`
+- **CI/CD:** GitHub Actions (`.github/workflows/deploy.yml`)
 
-### Команды деплоя
+### Процесс деплоя
+
+1. Push изменений в ветку `main`
+2. GitHub Actions автоматически:
+   - Устанавливает Bun
+   - Устанавливает зависимости
+   - Собирает проект (`bun run build`)
+   - Публикует на GitHub Pages
+
+### Ручной деплой
 
 ```bash
 bun build
-# Загрузка dist/ на GitHub Pages
+# Содержимое dist/ автоматически публикуется через GitHub Actions
 ```
 
 ## Особенности конфигурации
+
+### Два конфига Astro
+
+- **astro.config.dev.mjs** — для локальной разработки (base: `/`)
+- **astro.config.mjs** — для продакшна (base: `/StandartSoftPlus/`)
+
+Это решает проблему с путями к изображениям между локальной разработкой и GitHub Pages.
 
 ### Docker окружение
 
 - Включен polling для HMR на macOS (`CHOKIDAR_USEPOLLING=true`)
 - Порт 4321 пробрасывается на хост
-- SSH ключи монтируются для работы с Git
+- SSH ключи монтируются для работы с Git (в DevContainer)
+- Автоматическая установка зависимостей при старте
 
 ### VSCode расширения
 
@@ -90,6 +183,74 @@ bun build
 - Prettier
 - TailwindCSS IntelliSense
 
+### Навигация
+
+Реализована плавающая навигация с эффектами:
+
+- Glassmorphism дизайн (backdrop-filter: blur)
+- Три отдельных "острова": лого, навигация, контакты
+- Auto-hide при прокрутке вниз
+- Burger menu на мобильных устройствах
+- Плавные анимации
+
+## Работа с Content Collections
+
+Проекты портфолио управляются через Astro Content Collections с TypeScript схемой валидации:
+
+```typescript
+// src/content/config.ts
+const jobsCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    details: z.string(),
+    tags: z.array(z.string()),
+    client: z.string(),
+    stack: z.string(),
+    status: z.string(),
+    features: z.array(z.string()),
+    order: z.number(),
+    pubDate: z.string().optional(),
+  }),
+});
+```
+
+**Преимущества:**
+
+- Валидация данных на этапе сборки
+- Автоматическое TypeScript типизирование
+- Централизованное управление контентом
+- Легкое добавление/удаление проектов
+
+## Решение проблем
+
+### Изображения не отображаются
+
+1. Проверьте путь: должен начинаться с `/images/projects/`
+2. Проверьте расширение файла (регистр важен: `.jpg` vs `.JPG`)
+3. Убедитесь, что файл находится в `public/images/projects/job-X/`
+4. Перезапустите сервер разработки
+
+### HMR не работает на macOS
+
+Убедитесь, что переменная окружения `CHOKIDAR_USEPOLLING=true` установлена (уже настроено в Docker).
+
+### Стили не применяются
+
+1. Проверьте импорт глобальных стилей в `Layout.astro`
+2. Убедитесь, что Tailwind конфигурация загружена
+3. Перезапустите dev сервер
+
 ## Лицензия
 
-Проприетарный проект
+Проприетарный проект StandartSoft Plus
+
+---
+
+## Полезные ссылки
+
+- [Инструкция по добавлению контента](./how_add_content.md)
+- [Брендбук проекта](./brandbook.md)
+- [Astro Documentation](https://docs.astro.build)
+- [TailwindCSS Documentation](https://tailwindcss.com)
