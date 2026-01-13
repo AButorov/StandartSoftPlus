@@ -53,7 +53,7 @@ const { Content } = await job.render();
   <!-- Основной контент -->
   <section class="project-details">
     <div class="project-container">
-      <div class="project-content">
+      <div class="project-content" data-base-path={base}>
         <Content />
       </div>
     </div>
@@ -219,21 +219,21 @@ const { Content } = await job.render();
     color: white;
   }
 
-  /* Основной контент - ШИРОКИЙ */
+  /* Основной контент */
   .project-details {
     padding: 4rem 2rem;
     background: linear-gradient(135deg, rgba(61, 17, 57, 0.02), rgba(229, 28, 39, 0.02));
   }
 
   .project-container {
-    max-width: 1100px; /* УВЕЛИЧЕНО с 900px */
+    max-width: 1100px;
     margin: 0 auto;
     padding: 0 2rem;
   }
 
   .project-content {
     background: white;
-    padding: 2.5rem; /* Оптимальный padding */
+    padding: 2.5rem;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(61, 17, 57, 0.08);
     width: 100%;
@@ -386,3 +386,35 @@ const { Content } = await job.render();
     }
   }
 </style>
+
+<script>
+  // Исправление путей изображений для GitHub Pages
+  function fixImagePaths() {
+    const content = document.querySelector('.project-content');
+    if (!content) return;
+
+    const basePath = content.getAttribute('data-base-path') || '/';
+    
+    // Исправляем пути только если basePath не корень
+    if (basePath === '/') return;
+
+    // Находим все изображения
+    const images = content.querySelectorAll('img');
+    
+    images.forEach((img) => {
+      const src = img.getAttribute('src');
+      
+      // Если путь начинается с / но не с basePath - добавляем basePath
+      if (src && src.startsWith('/') && !src.startsWith(basePath)) {
+        img.setAttribute('src', basePath + src.substring(1));
+      }
+    });
+  }
+
+  // Запускаем при загрузке DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixImagePaths);
+  } else {
+    fixImagePaths();
+  }
+</script>
