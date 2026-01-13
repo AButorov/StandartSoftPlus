@@ -1,6 +1,9 @@
 ---
-// Классическая навигация с градиентом
+// src/components/FloatingNav.astro
 const base = import.meta.env.BASE_URL;
+
+// Определяем активную страницу
+const currentPath = Astro.url.pathname;
 ---
 
 <nav class="classic-nav">
@@ -9,22 +12,22 @@ const base = import.meta.env.BASE_URL;
       <img src={`${base}icon-nav.png`} alt="StandartSoft Plus" class="logo-icon">
       <span class="logo-text">StandartSoft<span class="logo-plus">+</span></span>
     </a>
-    
+
     <ul class="nav-menu">
       <li class="nav-item">
-        <a href={base} class="nav-link">Главное</a>
+        <a href={base} class={`nav-link ${currentPath === base ? 'active' : ''}`}>Главное</a>
       </li>
       <li class="nav-item">
-        <a href={`${base}services/`} class="nav-link">Услуги</a>
+        <a href={`${base}services/`} class={`nav-link ${currentPath.includes('/services') ? 'active' : ''}`}>Услуги</a>
       </li>
       <li class="nav-item">
-        <a href={`${base}portfolio/`} class="nav-link">Проекты</a>
+        <a href={`${base}portfolio/`} class={`nav-link ${currentPath.includes('/portfolio') || currentPath.includes('/jobs') ? 'active' : ''}`}>Проекты</a>
       </li>
       <li class="nav-item has-dropdown">
-        <a href={`${base}resources/`} class="nav-link">
+        <a href={`${base}resources/`} class={`nav-link ${currentPath.includes('/resources') || currentPath.includes('/faq') || currentPath.includes('/documents') ? 'active' : ''}`}>
           Ресурсы
           <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         </a>
         <div class="dropdown-menu">
@@ -33,10 +36,10 @@ const base = import.meta.env.BASE_URL;
         </div>
       </li>
       <li class="nav-item">
-        <a href={`${base}contacts/`} class="nav-link">Контакты</a>
+        <a href={`${base}contacts/`} class={`nav-link ${currentPath.includes('/contacts') ? 'active' : ''}`}>Контакты</a>
       </li>
     </ul>
-    
+
     <button class="mobile-toggle" id="mobileToggle" aria-label="Открыть меню">
       <div class="burger-icon">
         <span class="burger-line"></span>
@@ -55,7 +58,7 @@ const base = import.meta.env.BASE_URL;
       <button class="mobile-dropdown-toggle" id="mobileResourcesToggle">
         Ресурсы
         <svg class="mobile-dropdown-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </button>
       <div class="mobile-dropdown-content" id="mobileResourcesContent">
@@ -67,53 +70,8 @@ const base = import.meta.env.BASE_URL;
   </div>
 </nav>
 
-<script>
-  // Мобильное меню
-  const mobileToggle = document.getElementById('mobileToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
-  
-  if (mobileToggle && mobileMenu) {
-    mobileToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('active');
-      mobileToggle.classList.toggle('active');
-    });
-
-    // Закрытие при клике вне
-    document.addEventListener('click', (e: MouseEvent) => {
-      const target = e.target as Node;
-      if (!mobileMenu.contains(target) && !mobileToggle.contains(target)) {
-        mobileMenu.classList.remove('active');
-        mobileToggle.classList.remove('active');
-      }
-    });
-  }
-
-  // Мобильное выпадающее меню
-  const mobileResourcesToggle = document.getElementById('mobileResourcesToggle');
-  const mobileResourcesContent = document.getElementById('mobileResourcesContent');
-  
-  if (mobileResourcesToggle && mobileResourcesContent) {
-    mobileResourcesToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      mobileResourcesContent.classList.toggle('active');
-      mobileResourcesToggle.classList.toggle('active');
-    });
-  }
-
-  // Активная ссылка
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link, .mobile-link');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href).pathname;
-    if (linkPath === currentPath) {
-      link.classList.add('active');
-    }
-  });
-</script>
-
 <style>
-  /* Основная навигация */
+  /* Навигация */
   .classic-nav {
     background: var(--gradient-brand);
     box-shadow: 0 2px 10px rgba(61, 17, 57, 0.15);
@@ -221,7 +179,7 @@ const base = import.meta.env.BASE_URL;
     transform: rotate(180deg);
   }
 
-  /* Выпадающее меню - ИСПРАВЛЕНО */
+  /* Dropdown меню - ИСПРАВЛЕНО */
   .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -254,15 +212,31 @@ const base = import.meta.env.BASE_URL;
     text-transform: none;
     letter-spacing: normal;
     transition: all 0.2s ease;
+    position: relative;
   }
 
-  /* ИСПРАВЛЕНИЕ: убрал изменение padding-left при hover */
+  /* ИСПРАВЛЕНИЕ: используем псевдоэлемент вместо изменения padding */
+  .dropdown-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: var(--color-secondary);
+    transition: width 0.2s ease;
+  }
+
   .dropdown-link:hover {
-    background: rgba(61, 17, 57, 0.08);
+    background: rgba(61, 17, 57, 0.05);
     color: var(--color-secondary);
   }
 
-  /* Мобильная кнопка */
+  .dropdown-link:hover::before {
+    width: 4px;
+  }
+
+  /* Мобильное меню */
   .mobile-toggle {
     display: none;
     background: none;
@@ -300,7 +274,6 @@ const base = import.meta.env.BASE_URL;
     transform: translateY(-8.5px) rotate(-45deg);
   }
 
-  /* Мобильное меню */
   .mobile-menu {
     display: none;
     background: white;
@@ -322,23 +295,34 @@ const base = import.meta.env.BASE_URL;
     font-weight: 500;
     border-bottom: 1px solid rgba(61, 17, 57, 0.05);
     transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .mobile-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: var(--color-secondary);
+    transition: width 0.2s ease;
   }
 
   .mobile-link:hover,
   .mobile-link.active {
     background: rgba(61, 17, 57, 0.05);
     color: var(--color-secondary);
-    padding-left: 2.5rem;
+  }
+
+  .mobile-link:hover::before {
+    width: 4px;
   }
 
   .mobile-link.sub {
     padding-left: 3rem;
     font-size: 0.9rem;
     font-weight: 400;
-  }
-
-  .mobile-link.sub:hover {
-    padding-left: 3.5rem;
   }
 
   .mobile-dropdown {
@@ -432,3 +416,35 @@ const base = import.meta.env.BASE_URL;
     }
   }
 </style>
+
+<script>
+  // Мобильное меню
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileResourcesToggle = document.getElementById('mobileResourcesToggle');
+  const mobileResourcesContent = document.getElementById('mobileResourcesContent');
+
+  if (mobileToggle && mobileMenu) {
+    mobileToggle.addEventListener('click', () => {
+      mobileToggle.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+  }
+
+  if (mobileResourcesToggle && mobileResourcesContent) {
+    mobileResourcesToggle.addEventListener('click', () => {
+      mobileResourcesToggle.classList.toggle('active');
+      mobileResourcesContent.classList.toggle('active');
+    });
+  }
+
+  // Закрытие мобильного меню при клике на ссылку
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if (mobileToggle && mobileMenu) {
+        mobileToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      }
+    });
+  });
+</script>
