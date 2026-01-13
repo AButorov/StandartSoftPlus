@@ -1,0 +1,113 @@
+---
+// src/pages/contacts/index.astro
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Контакты - StandartSoft Plus">
+  <section class="hero-section">
+    <div class="container">
+      <h1>Контакты</h1>
+      <p class="slogan">Свяжитесь с нами для обсуждения вашего проекта</p>
+    </div>
+  </section>
+
+  <section class="contacts-section">
+    <div class="container">
+      <div class="contact-card">
+        <h3>Email</h3>
+        <p><a href="mailto:info@standartsoftplus.ru">info@standartsoftplus.ru</a></p>
+      </div>
+
+      <div class="contact-card">
+        <h3>Telegram</h3>
+        <p><a href="https://t.me/standartsoftplus" target="_blank">@standartsoftplus</a></p>
+      </div>
+
+      <div class="contact-card">
+        <h3>Телефон</h3>
+        <p><a href="tel:+79001234567">+7 (900) 123-45-67</a></p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero-section {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent-1));
+    color: white;
+  }
+
+  h1 {
+    font-family: var(--font-heading);
+    font-weight: 200;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .slogan {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.95;
+  }
+
+  .contacts-section {
+    padding: 4rem 2rem;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .contact-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(61, 17, 57, 0.08);
+    border: 1px solid rgba(61, 17, 57, 0.05);
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(61, 17, 57, 0.12);
+    border-color: var(--color-secondary);
+  }
+
+  .contact-card h3 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+  }
+
+  .contact-card a {
+    color: var(--color-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .contact-card a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+
+    .container {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

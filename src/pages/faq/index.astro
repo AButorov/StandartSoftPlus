@@ -1,0 +1,129 @@
+---
+// src/pages/faq/index.astro
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Вопросы и ответы - StandartSoft Plus">
+  <section class="hero-section">
+    <div class="container">
+      <h1>Вопросы и ответы</h1>
+      <p class="slogan">Часто задаваемые вопросы о наших услугах</p>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="container">
+      <div class="faq-item">
+        <h3>Какие технологии вы используете?</h3>
+        <p>
+          Мы работаем с современными технологиями: React Native, Flutter для мобильных приложений,
+          Astro, React, Vue.js для веб-разработки, а также Node.js, Python для backend.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Сколько стоит разработка приложения?</h3>
+        <p>
+          Стоимость зависит от сложности проекта, функциональности и сроков. 
+          Минимальная стоимость MVP начинается от 300 000 ₽.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Какие сроки разработки?</h3>
+        <p>
+          Типичный MVP мобильного приложения занимает 2-3 месяца. 
+          Более сложные проекты могут занять от 4 до 12 месяцев.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Предоставляете ли вы поддержку после запуска?</h3>
+        <p>
+          Да, мы предлагаем пакеты технической поддержки и сопровождения проектов 
+          после завершения разработки.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Как начать работу с вами?</h3>
+        <p>
+          Свяжитесь с нами через форму на сайте или по email. Мы обсудим ваш проект,
+          составим коммерческое предложение и план работ.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero-section {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent-1));
+    color: white;
+  }
+
+  h1 {
+    font-family: var(--font-heading);
+    font-weight: 200;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .slogan {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.95;
+  }
+
+  .faq-section {
+    padding: 4rem 2rem;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: white;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(61, 17, 57, 0.08);
+    border: 1px solid rgba(61, 17, 57, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .faq-item:hover {
+    box-shadow: 0 8px 30px rgba(61, 17, 57, 0.12);
+    border-color: var(--color-secondary);
+  }
+
+  .faq-item h3 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+  }
+
+  .faq-item p {
+    color: var(--color-text);
+    opacity: 0.8;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+
+    .faq-item {
+      padding: 1.5rem;
+    }
+  }
+</style>
