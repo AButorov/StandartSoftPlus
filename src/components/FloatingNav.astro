@@ -221,7 +221,7 @@ const base = import.meta.env.BASE_URL;
     transform: rotate(180deg);
   }
 
-  /* Выпадающее меню */
+  /* Выпадающее меню - ИСПРАВЛЕНО */
   .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -256,10 +256,10 @@ const base = import.meta.env.BASE_URL;
     transition: all 0.2s ease;
   }
 
+  /* ИСПРАВЛЕНИЕ: убрал изменение padding-left при hover */
   .dropdown-link:hover {
-    background: rgba(61, 17, 57, 0.05);
+    background: rgba(61, 17, 57, 0.08);
     color: var(--color-secondary);
-    padding-left: 1.5rem;
   }
 
   /* Мобильная кнопка */

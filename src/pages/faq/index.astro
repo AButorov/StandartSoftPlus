@@ -1,98 +1,273 @@
 ---
 // src/pages/faq/index.astro
 import Layout from '../../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Вопросы и ответы - StandartSoft Plus">
   <section class="hero-section">
-    <div class="container">
-      <h1>Вопросы и ответы</h1>
-      <p class="slogan">Часто задаваемые вопросы о наших услугах</p>
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1>Вопросы и ответы</h1>
+        <p class="slogan">Часто задаваемые вопросы о наших услугах</p>
+      </div>
+      <div class="hero-decoration">
+        <div class="decoration-circle">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="17" r="1" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="faq-section">
+  <section class="faq-content">
     <div class="container">
+      <!-- Вопрос 1: Права на приложение -->
       <div class="faq-item">
-        <h3>Какие технологии вы используете?</h3>
-        <p>
-          Мы работаем с современными технологиями: React Native, Flutter для мобильных приложений,
-          Astro, React, Vue.js для веб-разработки, а также Node.js, Python для backend.
-        </p>
+        <div class="faq-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="faq-text">
+          <h3>После разработки приложение становится моим или я им просто управляю, а все права у вас?</h3>
+          <p>
+            После окончания разработки мы по договору передаём исходный код и закрываем это актами. 
+            <strong>Все права интеллектуальной собственности остаются у заказчика.</strong> В сторах разработчиком 
+            проекта также является заказчик, а все средства, полученные от приложения, поступают на ваш счёт.
+          </p>
+        </div>
       </div>
 
+      <!-- Вопрос 2: Цена -->
       <div class="faq-item">
-        <h3>Сколько стоит разработка приложения?</h3>
-        <p>
-          Стоимость зависит от сложности проекта, функциональности и сроков. 
-          Минимальная стоимость MVP начинается от 300 000 ₽.
-        </p>
+        <div class="faq-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="faq-text">
+          <h3>Я видел на фрилансе в 3 раза дешевле. От чего, кроме опыта, формируется цена?</h3>
+          <p>
+            Цена складывается не только из опыта, но и из аналитики, погружения в продукт, анализа рынка, 
+            выстраивания корректной архитектуры приложения, процесса согласования и ответственности за результат.
+          </p>
+          <p>
+            За меньшую цену вы можете потерять не только в качестве готового продукта, но и, возможно, 
+            даже не дойти до этого этапа, оставшись наедине с неработающим приложением и парочкой нарисованных экранов. 
+            Пронесёт ли вас и получите ли вы качественный продукт — мы не знаем, но, как гласит известная пословица, 
+            <strong>скупой платит дважды.</strong>
+          </p>
+        </div>
       </div>
 
+      <!-- Вопрос 3: Кража идеи -->
       <div class="faq-item">
-        <h3>Какие сроки разработки?</h3>
-        <p>
-          Типичный MVP мобильного приложения занимает 2-3 месяца. 
-          Более сложные проекты могут занять от 4 до 12 месяцев.
-        </p>
+        <div class="faq-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="faq-text">
+          <h3>А я вам сейчас расскажу свою идею. Где гарантии, что вы её не украдёте?</h3>
+          <p>
+            Идею саму по себе запатентовать невозможно. К тому же на первоначальном этапе у вас никто 
+            не будет запрашивать суперсекретную информацию, но проект в общих чертах нам необходимо 
+            обсудить, чтобы понять, можем ли мы за это взяться или нет.
+          </p>
+        </div>
       </div>
 
+      <!-- Вопрос 4: Что если не понравится -->
       <div class="faq-item">
-        <h3>Предоставляете ли вы поддержку после запуска?</h3>
-        <p>
-          Да, мы предлагаем пакеты технической поддержки и сопровождения проектов 
-          после завершения разработки.
-        </p>
+        <div class="faq-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="faq-text">
+          <h3>А если мне не понравится? А если я передумаю в процессе?</h3>
+          <p>
+            Для этого и существуют бриф, ТЗ, правки и согласование этапов, зумы и промежуточные проверки. 
+            <strong>Мы выстроили систему поэтапной разработки</strong>, чтобы на каждом этапе вы могли 
+            видеть ход работы и при необходимости корректировать детали вместе с командой.
+          </p>
+          <p>
+            Если что-то не нравится, то в пределах договорённостей мы вносим правки и доводим приложение 
+            до результата, который вас устраивает.
+          </p>
+        </div>
       </div>
 
+      <!-- Вопрос 5: Без созвонов -->
       <div class="faq-item">
-        <h3>Как начать работу с вами?</h3>
-        <p>
-          Свяжитесь с нами через форму на сайте или по email. Мы обсудим ваш проект,
-          составим коммерческое предложение и план работ.
-        </p>
+        <div class="faq-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="faq-text">
+          <h3>Ой, я не люблю созвоны. А можно вы всё в переписке мне отправите — и всё?</h3>
+          <p>
+            К таким сразу много вопросов.
+          </p>
+          <p>
+            <strong>Короткий ответ: нет.</strong> Разработка приложения — это сложный и длительный процесс, 
+            и это постоянный диалог. По переписке я могу озвучить условия и понять, что вам нужно.
+          </p>
+          <p>
+            Но я не смогу нормально разобраться в вашей ситуации: какие у вас первостепенные задачи, 
+            что для вас важно и как вы видите сотрудничество. Докопаться до сути и понять, сходимся ли 
+            мы по подходу к работе и видению, можно только в формате живого диалога.
+          </p>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- CTA секция -->
+  <section class="cta-section">
+    <div class="container-narrow">
+      <h2>Остались вопросы?</h2>
+      <p>Свяжитесь с нами — мы с радостью всё объясним</p>
+      <a href={`${base}contacts/`} class="btn btn-primary">Связаться с нами</a>
     </div>
   </section>
 </Layout>
 
 <style>
+  /* Hero секция */
   .hero-section {
-    padding: 4rem 2rem;
-    text-align: center;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-accent-1));
-    color: white;
+    padding: 5rem 2rem;
+    background: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.03), rgba(229, 28, 39, 0.05));
+    clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+
+  .hero-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .hero-content {
+    text-align: left;
   }
 
   h1 {
     font-family: var(--font-heading);
-    font-weight: 200;
-    font-size: 3rem;
+    font-weight: 300;
+    font-size: 3.5rem;
+    color: var(--color-primary);
     margin-bottom: 1rem;
+    line-height: 1.2;
+    background: none;
+    -webkit-text-fill-color: var(--color-primary);
   }
 
   .slogan {
     font-family: var(--font-body);
     font-size: 1.125rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    opacity: 0.95;
+    color: var(--color-text);
+    opacity: 0.8;
+    text-transform: none;
+    letter-spacing: normal;
   }
 
-  .faq-section {
+  .hero-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .decoration-circle {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 60px rgba(61, 17, 57, 0.2);
+    position: relative;
+  }
+
+  .decoration-circle::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid var(--color-secondary);
+    opacity: 0.3;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 0;
+    }
+  }
+
+  .decoration-circle svg {
+    width: 100px;
+    height: 100px;
+    color: white;
+  }
+
+  /* FAQ контент */
+  .faq-content {
     padding: 4rem 2rem;
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.02), rgba(229, 28, 39, 0.02));
   }
 
   .container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
   }
 
+  .container-narrow {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
   .faq-item {
+    display: flex;
+    gap: 2rem;
     background: white;
-    padding: 2rem;
-    margin-bottom: 1.5rem;
-    border-radius: 12px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    border-radius: 16px;
     box-shadow: 0 4px 20px rgba(61, 17, 57, 0.08);
     border: 1px solid rgba(61, 17, 57, 0.05);
     transition: all 0.3s ease;
@@ -101,29 +276,153 @@ import Layout from '../../layouts/Layout.astro';
   .faq-item:hover {
     box-shadow: 0 8px 30px rgba(61, 17, 57, 0.12);
     border-color: var(--color-secondary);
+    transform: translateY(-2px);
   }
 
-  .faq-item h3 {
+  .faq-icon {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent-1));
+    border-radius: 16px;
+    color: white;
+  }
+
+  .faq-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .faq-text {
+    flex: 1;
+  }
+
+  .faq-text h3 {
     font-family: var(--font-heading);
     font-weight: 300;
     color: var(--color-primary);
     margin-bottom: 1rem;
-    font-size: 1.25rem;
+    font-size: 1.35rem;
+    line-height: 1.4;
+    background: none;
+    -webkit-text-fill-color: var(--color-primary);
   }
 
-  .faq-item p {
+  .faq-text p {
+    color: var(--color-text);
+    opacity: 0.85;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .faq-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .faq-text strong {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  /* CTA секция */
+  .cta-section {
+    padding: 4rem 2rem;
+    background: white;
+  }
+
+  .cta-section h2 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    background: none;
+    -webkit-text-fill-color: var(--color-primary);
+  }
+
+  .cta-section p {
     color: var(--color-text);
     opacity: 0.8;
-    line-height: 1.7;
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
   }
 
+  .btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .btn-primary {
+    background: var(--gradient-brand);
+    color: white;
+    box-shadow: 0 4px 20px rgba(61, 17, 57, 0.15);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 8px 30px rgba(61, 17, 57, 0.25);
+    transform: translateY(-2px);
+  }
+
+  /* Адаптивность */
   @media (max-width: 768px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-content {
+      text-align: center;
+    }
+
     h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
+    }
+
+    .decoration-circle {
+      width: 150px;
+      height: 150px;
+    }
+
+    .decoration-circle svg {
+      width: 75px;
+      height: 75px;
     }
 
     .faq-item {
-      padding: 1.5rem;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .faq-icon {
+      width: 56px;
+      height: 56px;
+    }
+
+    .faq-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .faq-text h3 {
+      font-size: 1.2rem;
+    }
+
+    .cta-section h2 {
+      font-size: 1.75rem;
     }
   }
 </style>

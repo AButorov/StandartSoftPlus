@@ -5,64 +5,173 @@ import Layout from '../../layouts/Layout.astro';
 
 <Layout title="Услуги - StandartSoft Plus">
   <section class="hero-section">
-    <div class="container">
-      <h1>Наши услуги</h1>
-      <p class="slogan">Профессиональная разработка мобильных приложений и веб-сервисов</p>
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1>Наши услуги</h1>
+        <p class="slogan">Профессиональная разработка мобильных приложений и веб-сервисов</p>
+      </div>
+      <div class="hero-decoration">
+        <div class="decoration-circle">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="services-grid">
     <div class="container">
       <div class="service-card">
+        <div class="service-icon">📱</div>
         <h3>Мобильные приложения</h3>
         <p>Разработка нативных и кроссплатформенных мобильных приложений для iOS и Android</p>
       </div>
 
       <div class="service-card">
+        <div class="service-icon">💻</div>
         <h3>Веб-сервисы</h3>
         <p>Создание современных веб-приложений и сервисов с использованием актуальных технологий</p>
       </div>
 
       <div class="service-card">
-        <h3>Консалтинг</h3>
-        <p>Экспертная оценка проектов, аудит кода и консультации по архитектуре</p>
+        <div class="service-icon">⚙️</div>
+        <h3>Backend & API</h3>
+        <p>Разработка серверной части приложений, REST API и интеграций</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <h3>UI/UX дизайн</h3>
+        <p>Проектирование интерфейсов с фокусом на удобство пользователя</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🤖</div>
+        <h3>Автоматизация бизнеса</h3>
+        <p>CRM-системы и внутренние инструменты для оптимизации процессов</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">💡</div>
+        <h3>Консультации</h3>
+        <p>Аудит кода, выбор технологий и архитектура проектов</p>
       </div>
     </div>
   </section>
 </Layout>
 
 <style>
+  /* Hero секция */
   .hero-section {
-    padding: 4rem 2rem;
-    text-align: center;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-accent-1));
-    color: white;
+    padding: 5rem 2rem;
+    background: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.03), rgba(229, 28, 39, 0.05));
+    clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+
+  .hero-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .hero-content {
+    text-align: left;
   }
 
   h1 {
     font-family: var(--font-heading);
-    font-weight: 200;
-    font-size: 3rem;
+    font-weight: 300;
+    font-size: 3.5rem;
+    color: var(--color-primary);
     margin-bottom: 1rem;
+    line-height: 1.2;
+    background: none;
+    -webkit-text-fill-color: var(--color-primary);
   }
 
   .slogan {
     font-family: var(--font-body);
     font-size: 1.125rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    opacity: 0.95;
+    color: var(--color-text);
+    opacity: 0.8;
   }
 
+  .hero-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .decoration-circle {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 60px rgba(61, 17, 57, 0.2);
+    position: relative;
+  }
+
+  .decoration-circle::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid var(--color-secondary);
+    opacity: 0.3;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 0;
+    }
+  }
+
+  .decoration-circle svg {
+    width: 100px;
+    height: 100px;
+    color: white;
+  }
+
+  /* Сетка услуг */
   .services-grid {
     padding: 4rem 2rem;
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.02), rgba(229, 28, 39, 0.02));
   }
 
   .container {
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
   }
 
@@ -81,6 +190,11 @@ import Layout from '../../layouts/Layout.astro';
     border-color: var(--color-secondary);
   }
 
+  .service-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
   .service-card h3 {
     font-family: var(--font-heading);
     font-weight: 300;
@@ -92,11 +206,32 @@ import Layout from '../../layouts/Layout.astro';
     color: var(--color-text);
     opacity: 0.8;
     line-height: 1.6;
+    margin: 0;
   }
 
+  /* Адаптивность */
   @media (max-width: 768px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-content {
+      text-align: center;
+    }
+
     h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
+    }
+
+    .decoration-circle {
+      width: 150px;
+      height: 150px;
+    }
+
+    .decoration-circle svg {
+      width: 75px;
+      height: 75px;
     }
 
     .container {
