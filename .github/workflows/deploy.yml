@@ -25,6 +25,8 @@ jobs:
         run: bun install
 
       - name: Build
+        env:
+          PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
         run: bun run build
 
       - name: Upload artifact
