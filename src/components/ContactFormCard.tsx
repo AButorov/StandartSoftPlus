@@ -87,15 +87,12 @@ export default function ContactFormCard() {
     setStatus("loading");
 
     try {
-      // Получаем API ключ из переменной окружения или используем заглушку
       const apiKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "DEMO_KEY";
 
-      // Если ключ не настроен, показываем предупреждение
       if (apiKey === "DEMO_KEY") {
         console.warn(
           "Web3Forms API ключ не настроен. Форма работает в демо-режиме."
         );
-        // Симулируем успешную отправку для демо
         setTimeout(() => {
           setStatus("success");
           setFormData({
@@ -150,7 +147,6 @@ export default function ContactFormCard() {
     });
   };
 
-  // Проверка, активен ли label
   const isLabelActive = (name: string): boolean => {
     if (focusedField === name) return true;
     const value = formData[name as keyof FormData];
@@ -161,11 +157,13 @@ export default function ContactFormCard() {
     <div className="contact-form-card">
       <div className="card-header">
         <h2>Начнём сотрудничество</h2>
-        <p>Расскажите о вашем проекте, консультация бесплатно</p>
+        <p style={{ color: "white" }}>
+          Расскажите о вашем проекте, консультация бесплатна
+        </p>
       </div>
 
       <form onSubmit={handleSubmit} className="card-body">
-        {/* Имя */}
+        {/* Имя с автофокусом */}
         <div className="input-wrapper">
           <label
             htmlFor="name"
@@ -178,6 +176,7 @@ export default function ContactFormCard() {
             id="name"
             name="name"
             required
+            autoFocus
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             onFocus={() => setFocusedField("name")}
