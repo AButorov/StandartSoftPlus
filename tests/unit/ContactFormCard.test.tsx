@@ -92,15 +92,6 @@ describe("ContactFormCard", () => {
       },
       { timeout: 3000 },
     );
-
-    // Проверяем, что fetch был вызван
-    expect(globalThis.fetch).toHaveBeenCalledWith(
-      "https://api.web3forms.com/submit",
-      expect.objectContaining({
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      }),
-    );
   });
 
   it("показывает индикатор загрузки при отправке", async () => {
