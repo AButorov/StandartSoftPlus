@@ -31,5 +31,8 @@
     }
   },
   "postCreateCommand": "bun install && git config --global user.name 'AButorov' && git config --global user.email 'butorov.ap@gmail.com'",
-  "remoteUser": "bun"
+  "remoteUser": "bun",
+  "containerEnv": {
+    "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1"
+  }
 }
