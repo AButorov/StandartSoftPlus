@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import tailwindcss from "@tailwindcss/vite";
+import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
   site: "https://abutorov.github.io",
@@ -11,10 +11,9 @@ export default defineConfig({
     port: 4321,
   },
 
-  integrations: [react()],
+  integrations: [react(), tailwind()],
 
   vite: {
-    plugins: [tailwindcss()],
     server: {
       watch: {
         usePolling: true,
