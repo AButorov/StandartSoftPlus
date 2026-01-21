@@ -39,9 +39,11 @@
 1. Открыть проект в VSCode
 2. Выполнить команду: `Dev Containers: Reopen in Container`
 3. Создать `.env` файл с Web3Forms API ключом:
-   ```bash
+
+```bash
    echo "PUBLIC_WEB3FORMS_KEY=ваш_ключ_здесь" > .env
-   ```
+```
+
 4. Дождаться автоматической установки зависимостей
 
 Сервер запускается автоматически на `http://localhost:4321`
@@ -73,11 +75,62 @@ bun dev
 
 ## Команды
 
-| Команда       | Описание                                                   |
-| ------------- | ---------------------------------------------------------- |
-| `bun dev`     | Запуск dev-сервера с HMR (использует astro.config.dev.mjs) |
-| `bun build`   | Сборка продакшн-версии (использует astro.config.mjs)       |
-| `bun preview` | Предпросмотр собранной версии                              |
+| Команда              | Описание                                                   |
+| -------------------- | ---------------------------------------------------------- |
+| `bun dev`            | Запуск dev-сервера с HMR (использует astro.config.dev.mjs) |
+| `bun build`          | Сборка продакшн-версии (использует astro.config.mjs)       |
+| `bun preview`        | Предпросмотр собранной версии                              |
+| `./clean-install.sh` | Очистка кеша и переустановка зависимостей                  |
+
+## Обслуживание проекта
+
+### Скрипт очистки и переустановки
+
+При проблемах с зависимостями или кешем используйте:
+
+```bash
+# Первый запуск - сделайте файл исполняемым
+chmod +x clean-install.sh
+
+# Запуск очистки и переустановки
+./clean-install.sh
+```
+
+**Скрипт выполняет:**
+
+- Удаление `node_modules`
+- Очистка кеша `.astro`
+- Удаление `bun.lock`
+- Очистка `.cache` (Playwright)
+- Переустановка всех зависимостей
+
+### Git workflow
+
+**Основные ветки:**
+
+- `main` - рабочая продакшн версия
+- `backup-testing` - экспериментальная ветка с тестами
+
+**Откат к стабильной версии:**
+
+```bash
+# 1. Сохраните текущие изменения
+git add .
+git commit -m "WIP: описание"
+
+# 2. Создайте новую ветку из нужного коммита
+git checkout -b main-restored <хеш_коммита>
+
+# 3. Переименуйте текущий main в backup
+git branch -m main backup-testing
+
+# 4. Сделайте новую ветку основной
+git branch -m main-restored main
+
+# 5. Отправьте на GitHub
+git push origin main --force
+git push origin backup-testing
+```
 
 ## Настройка Web3Forms (контактная форма)
 
@@ -130,6 +183,7 @@ GitHub Actions автоматически использует этот ключ
 │   └── deploy.yml           # Автоматический деплой на GitHub Pages
 ├── .env                     # Переменные окружения (НЕ коммитить!)
 ├── .env.example             # Пример .env файла
+├── clean-install.sh         # Скрипт очистки и переустановки зависимостей
 ├── src/
 │   ├── components/          # Astro/React компоненты
 │   │   ├── FloatingNav.astro    # Плавающая навигация с glassmorphism
@@ -337,6 +391,17 @@ const jobsCollection = defineCollection({
 
 ## Решение проблем
 
+### Проблемы с зависимостями или кешем
+
+```bash
+# Запустите скрипт очистки
+./clean-install.sh
+
+# Если скрипт не исполняемый
+chmod +x clean-install.sh
+./clean-install.sh
+```
+
 ### Изображения не отображаются
 
 1. Проверьте путь: должен начинаться с `/images/projects/`
@@ -359,10 +424,12 @@ const jobsCollection = defineCollection({
 **Локально:**
 
 1. Проверьте `.env` файл:
-   ```bash
+
+```bash
    cat .env
    # Должно быть: PUBLIC_WEB3FORMS_KEY=ваш_ключ
-   ```
+```
+
 2. Перезапустите dev сервер: `bun run dev`
 3. Проверьте консоль браузера на ошибки
 
@@ -371,10 +438,12 @@ const jobsCollection = defineCollection({
 1. Проверьте GitHub Secret: https://github.com/abutorov/StandartSoftPlus/settings/secrets/actions
 2. Убедитесь, что секрет называется `WEB3FORMS_KEY`
 3. Проверьте, что `.github/workflows/deploy.yml` содержит:
-   ```yaml
-   env:
-     PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
-   ```
+
+```yaml
+env:
+  PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+```
+
 4. Пересоберите проект: пуш в main или ручной запуск workflow
 
 ### Форма в демо-режиме
@@ -391,10 +460,11 @@ const jobsCollection = defineCollection({
 Если форма исчезает после загрузки:
 
 ```bash
-# Очистите кеш Vite
-rm -rf node_modules/.vite .astro dist
+# Используйте скрипт очистки
+./clean-install.sh
 
-# Перезапустите
+# Или вручную
+rm -rf node_modules/.vite .astro dist
 bun run dev
 ```
 
