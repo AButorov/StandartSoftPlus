@@ -1,7 +1,27 @@
 /* Импорт Tailwind CSS v4 */
 @import "tailwindcss";
 
-/* Кастомные CSS переменные */
+/* Кастомная тема для Tailwind v4 */
+@theme {
+  /* Брендовые цвета - создают классы bg-brand-primary, text-brand-primary и т.д. */
+  --color-brand-primary: #3d1139;
+  --color-brand-secondary: #e51c27;
+  --color-brand-accent1: #751433;
+  --color-brand-accent2: #ad182d;
+  --color-brand-bg: #fcfcfc;
+
+  /* Брендовые размеры шрифтов - создают классы text-brand-h1 и т.д. */
+  --font-size-brand-h1: 3.5rem;
+  --font-size-brand-h2: 2.5rem;
+  --font-size-brand-h3: 1.875rem;
+  --font-size-brand-slogan: 1.125rem;
+
+  /* Брендовые межбуквенные расстояния */
+  --letter-spacing-brand: 0.03em;
+  --letter-spacing-brand-wide: 0.04em;
+}
+
+/* Кастомные CSS переменные (не для Tailwind утилит) */
 @import "./variables.css";
 
 /* Кастомная типографика */
