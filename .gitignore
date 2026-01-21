@@ -1,24 +1,98 @@
 # build output
 dist/
+dist-ssr/
+.output/
+
 # generated types
 .astro/
 
 # dependencies
 node_modules/
+.pnp/
+.pnp.js
 
 # logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
+lerna-debug.log*
+bun-debug.log*
 
 # environment variables
 .env
+.env.local
 .env.production
+.env.development.local
+.env.test.local
+.env.production.local
+
+# cache
+.cache/
+.vite/
+.parcel-cache/
+.turbo/
+
+# testing
+coverage/
+.nyc_output/
+/test-results/
+/playwright-report/
+/playwright/.cache/
 
 # macOS-specific files
 .DS_Store
+.AppleDouble
+.LSOverride
 
-# jetbrains setting folder
+# Windows-specific files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux-specific files
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# IDEs and editors
 .idea/
+.vscode/settings.json
+.vscode/launch.json
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+*.temp
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Temporary files
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# Debug files
+.vscode/chrome/
+pids
+*.pid.lock
+
+# OS metadata
+.Spotlight-V100
+.Trashes
+._*
