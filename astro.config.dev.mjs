@@ -4,7 +4,7 @@ import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://abutorov.github.io",
+  site: "http://localhost:4321",
   base: "/",
 
   server: {
