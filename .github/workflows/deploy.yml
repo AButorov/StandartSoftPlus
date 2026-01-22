@@ -29,6 +29,9 @@ jobs:
           PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
         run: bun run build
 
+      - name: Add CNAME
+        run: echo "standartsoftplus.com" > ./dist/CNAME
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

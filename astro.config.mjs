@@ -4,8 +4,8 @@ import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://abutorov.github.io",
-  base: "/StandartSoftPlus/",
+  site: "https://standartsoftplus.com", // твой домен
+  base: "/", // убираем base path
 
   server: {
     host: "0.0.0.0",

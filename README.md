@@ -2,7 +2,8 @@
 
 Сайт-визитка студии разработки мобильного программного обеспечения с функциями привлечения клиентов и интерактивного взаимодействия.
 
-**Демо:** https://abutorov.github.io/StandartSoftPlus/
+**Production:** https://standartsoftplus.com  
+**Альтернативный URL:** https://abutorov.github.io/StandartSoftPlus/
 
 ## Технологии
 
@@ -11,7 +12,7 @@
 - **Styling:** TailwindCSS 4.1.18
 - **Forms:** Web3Forms API (контактная форма)
 - **Runtime:** Bun 1.x
-- **Deployment:** GitHub Pages + GitHub Actions
+- **Deployment:** GitHub Pages + Cloudflare DNS
 - **Dev Environment:** Docker + DevContainer (macOS Apple Silicon)
 
 ## Возможности
@@ -19,7 +20,7 @@
 - ✅ Адаптивный дизайн с glassmorphism эффектами
 - ✅ Интерактивная контактная форма с реальной отправкой email
 - ✅ Портфолио проектов через Content Collections
-- ✅ Автоматический деплой на GitHub Pages
+- ✅ Автоматический деплой на GitHub Pages с кастомным доменом
 - ✅ HMR (Hot Module Replacement) в разработке
 - ✅ Плавающая навигация с auto-hide
 - ✅ SEO оптимизация
@@ -41,7 +42,7 @@
 3. Создать `.env` файл с Web3Forms API ключом:
 
 ```bash
-   echo "PUBLIC_WEB3FORMS_KEY=ваш_ключ_здесь" > .env
+echo "PUBLIC_WEB3FORMS_KEY=ваш_ключ_здесь" > .env
 ```
 
 4. Дождаться автоматической установки зависимостей
@@ -75,12 +76,12 @@ bun dev
 
 ## Команды
 
-| Команда              | Описание                                                   |
-| -------------------- | ---------------------------------------------------------- |
-| `bun dev`            | Запуск dev-сервера с HMR (использует astro.config.dev.mjs) |
-| `bun build`          | Сборка продакшн-версии (использует astro.config.mjs)       |
-| `bun preview`        | Предпросмотр собранной версии                              |
-| `./clean-install.sh` | Очистка кеша и переустановка зависимостей                  |
+| Команда              | Описание                                  |
+| -------------------- | ----------------------------------------- |
+| `bun dev`            | Запуск dev-сервера с HMR                  |
+| `bun build`          | Сборка продакшн-версии                    |
+| `bun preview`        | Предпросмотр собранной версии             |
+| `./clean-install.sh` | Очистка кеша и переустановка зависимостей |
 
 ## Обслуживание проекта
 
@@ -171,7 +172,7 @@ GitHub Actions автоматически использует этот ключ
 
 **Production:**
 
-1. Откройте https://abutorov.github.io/StandartSoftPlus/contacts/
+1. Откройте https://standartsoftplus.com/contacts/
 2. Заполните и отправьте форму
 3. Проверьте email - письмо должно прийти
 
@@ -220,8 +221,7 @@ GitHub Actions автоматически использует этот ключ
 │   ├── favicon.ico
 │   ├── icon-nav.png         # Иконка для навигации
 │   └── ...                  # Другие статические ресурсы
-├── astro.config.mjs         # Продакшн конфигурация (base: /StandartSoftPlus/)
-├── astro.config.dev.mjs     # Dev конфигурация (base: /)
+├── astro.config.mjs         # Конфигурация Astro
 ├── compose.yaml             # Docker Compose конфигурация
 ├── brandbook.md             # Брендбук проекта
 └── how_add_content.md       # Инструкция по добавлению контента
@@ -267,8 +267,8 @@ GitHub Actions автоматически использует этот ключ
 
 Проект автоматически публикуется на GitHub Pages при push в ветку `main`:
 
-- **URL:** https://abutorov.github.io/StandartSoftPlus/
-- **Base Path:** `/StandartSoftPlus/`
+- **URL:** https://standartsoftplus.com
+- **Альтернативный URL:** https://abutorov.github.io/StandartSoftPlus/
 - **CI/CD:** GitHub Actions (`.github/workflows/deploy.yml`)
 
 ### Процесс деплоя
@@ -278,6 +278,7 @@ GitHub Actions автоматически использует этот ключ
    - Устанавливает Bun
    - Устанавливает зависимости
    - Собирает проект с Web3Forms API ключом (`bun run build`)
+   - Создает файл `CNAME` для кастомного домена
    - Публикует на GitHub Pages
 
 ### Требования для деплоя
@@ -288,6 +289,34 @@ GitHub Actions автоматически использует этот ключ
 https://github.com/abutorov/StandartSoftPlus/settings/secrets/actions
 
 Без этого секрета форма контактов будет работать в демо-режиме (без реальной отправки).
+
+### Настройка кастомного домена
+
+#### DNS настройка (Cloudflare)
+
+**A-записи для apex домена:**
+
+| Type | Name | Content         | Proxy status |
+| ---- | ---- | --------------- | ------------ |
+| A    | @    | 185.199.108.153 | DNS only     |
+| A    | @    | 185.199.109.153 | DNS only     |
+| A    | @    | 185.199.110.153 | DNS only     |
+| A    | @    | 185.199.111.153 | DNS only     |
+
+**CNAME для www:**
+
+| Type  | Name | Content            | Proxy status |
+| ----- | ---- | ------------------ | ------------ |
+| CNAME | www  | abutorov.github.io | DNS only     |
+
+#### GitHub Pages настройка
+
+1. Репозиторий → Settings → Pages
+2. **Custom domain:** `standartsoftplus.com`
+3. Дождитесь проверки DNS
+4. Включите **Enforce HTTPS**
+
+**Важно:** Файл `CNAME` создается автоматически при каждом деплое через GitHub Actions.
 
 ### Ручной деплой
 
@@ -300,12 +329,12 @@ bun build
 
 ## Особенности конфигурации
 
-### Два конфига Astro
+### Конфигурация Astro
 
-- **astro.config.dev.mjs** — для локальной разработки (base: `/`)
-- **astro.config.mjs** — для продакшна (base: `/StandartSoftPlus/`)
+Единый конфиг `astro.config.mjs` для всех окружений:
 
-Это решает проблему с путями к изображениям между локальной разработкой и GitHub Pages.
+- **Development:** Astro автоматически игнорирует `base` при `bun dev`
+- **Production:** Использует `base: "/"` для кастомного домена
 
 ### Переменные окружения
 
@@ -426,8 +455,8 @@ chmod +x clean-install.sh
 1. Проверьте `.env` файл:
 
 ```bash
-   cat .env
-   # Должно быть: PUBLIC_WEB3FORMS_KEY=ваш_ключ
+cat .env
+# Должно быть: PUBLIC_WEB3FORMS_KEY=ваш_ключ
 ```
 
 2. Перезапустите dev сервер: `bun run dev`
@@ -468,12 +497,21 @@ rm -rf node_modules/.vite .astro dist
 bun run dev
 ```
 
+### Домен не работает после деплоя
+
+1. Проверьте DNS записи в Cloudflare (должны быть **DNS only**)
+2. Дождитесь распространения DNS (5-10 минут)
+3. Проверьте GitHub Pages Settings → Custom domain
+4. Убедитесь, что файл `CNAME` присутствует в деплое
+5. Проверьте GitHub Pages HTTPS сертификат (может занять до часа)
+
 ## Безопасность
 
 - ✅ API ключи хранятся в `.env` (локально) и GitHub Secrets (production)
 - ✅ `.env` файл в `.gitignore` - не попадает в репозиторий
 - ✅ Форма валидирует все поля перед отправкой
 - ✅ Web3Forms защищает от спама и ботов
+- ✅ Cloudflare DNS защищает от DDoS атак
 
 ## Лицензия
 
@@ -489,3 +527,4 @@ bun run dev
 - [TailwindCSS Documentation](https://tailwindcss.com)
 - [Web3Forms Documentation](https://docs.web3forms.com)
 - [Bun Documentation](https://bun.sh/docs)
+- [GitHub Pages Custom Domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)
