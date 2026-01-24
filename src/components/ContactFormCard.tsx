@@ -92,45 +92,8 @@ export default function ContactFormCard() {
       const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "DEMO_KEY";
       const telegramWorkerUrl = import.meta.env.PUBLIC_TELEGRAM_WORKER_URL;
 
-      const promises: Promise<Response>[] = [];
-
-      if (web3formsKey !== "DEMO_KEY") {
-        promises.push(
-          fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              access_key: web3formsKey,
-              name: formData.name,
-              contact_type: contactOptions.find(
-                (opt) => opt.value === formData.contactType,
-              )?.label,
-              contact: formData.contactValue,
-              message: formData.message,
-              subject: `Новая заявка от ${formData.name} (${contactOptions.find((opt) => opt.value === formData.contactType)?.label})`,
-            }),
-          }),
-        );
-      }
-
-      if (telegramWorkerUrl) {
-        promises.push(
-          fetch(telegramWorkerUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name: formData.name,
-              contactType:
-                contactOptions.find((opt) => opt.value === formData.contactType)
-                  ?.label || formData.contactType,
-              contactValue: formData.contactValue,
-              message: formData.message,
-            }),
-          }),
-        );
-      }
-
-      if (promises.length === 0) {
+      // Демо режим - симуляция отправки
+      if (web3formsKey === "DEMO_KEY" && !telegramWorkerUrl) {
         console.warn("Форма работает в демо-режиме");
         setTimeout(() => {
           setStatus("success");
@@ -141,17 +104,66 @@ export default function ContactFormCard() {
             message: "",
           });
           setTimeout(() => setStatus("idle"), 5000);
-        }, 1500);
+        }, 800);
         return;
       }
 
-      const results = await Promise.allSettled(promises);
+      // АСИНХРОННАЯ ОТПРАВКА (fire-and-forget)
+      // Отправляем запросы БЕЗ ожидания ответа
 
-      const hasSuccess = results.some(
-        (result) => result.status === "fulfilled" && result.value.ok,
-      );
+      // Web3Forms
+      if (web3formsKey !== "DEMO_KEY") {
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            access_key: web3formsKey,
+            name: formData.name,
+            contact_type: contactOptions.find(
+              (opt) => opt.value === formData.contactType,
+            )?.label,
+            contact: formData.contactValue,
+            message: formData.message,
+            subject: `Новая заявка от ${formData.name} (${contactOptions.find((opt) => opt.value === formData.contactType)?.label})`,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              console.error("Web3Forms error:", response.status);
+            }
+          })
+          .catch((error) => {
+            console.error("Web3Forms fetch error:", error);
+          });
+      }
 
-      if (hasSuccess) {
+      // Telegram Worker
+      if (telegramWorkerUrl) {
+        fetch(telegramWorkerUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            contactType:
+              contactOptions.find((opt) => opt.value === formData.contactType)
+                ?.label || formData.contactType,
+            contactValue: formData.contactValue,
+            message: formData.message,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              console.error("Telegram Worker error:", response.status);
+            }
+          })
+          .catch((error) => {
+            console.error("Telegram Worker fetch error:", error);
+          });
+      }
+
+      // Оптимистичный UI - показываем успех сразу
+      // Небольшая задержка для UX (чтобы не выглядело подозрительно быстро)
+      setTimeout(() => {
         setStatus("success");
         setFormData({
           name: "",
@@ -160,9 +172,7 @@ export default function ContactFormCard() {
           message: "",
         });
         setTimeout(() => setStatus("idle"), 5000);
-      } else {
-        setStatus("error");
-      }
+      }, 500);
     } catch (error) {
       console.error("Ошибка отправки формы:", error);
       setStatus("error");
