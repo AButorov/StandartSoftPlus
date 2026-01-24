@@ -27,6 +27,7 @@ jobs:
       - name: Build
         env:
           PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+          PUBLIC_TELEGRAM_WORKER_URL: ${{ secrets.PUBLIC_TELEGRAM_WORKER_URL }}
         run: bun run build
 
       - name: Add CNAME
