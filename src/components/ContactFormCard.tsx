@@ -108,11 +108,13 @@ export default function ContactFormCard() {
         return;
       }
 
-      // АСИНХРОННАЯ ОТПРАВКА (fire-and-forget)
-      // Отправляем запросы БЕЗ ожидания ответа
+      // АСИНХРОННАЯ ОТПРАВКА с timeout и keepalive
 
-      // Web3Forms
+      // Web3Forms с таймаутом 10 секунд
       if (web3formsKey !== "DEMO_KEY") {
+        const controller1 = new AbortController();
+        const timeoutId1 = setTimeout(() => controller1.abort(), 10000);
+
         fetch("https://api.web3forms.com/submit", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -126,19 +128,32 @@ export default function ContactFormCard() {
             message: formData.message,
             subject: `Новая заявка от ${formData.name} (${contactOptions.find((opt) => opt.value === formData.contactType)?.label})`,
           }),
+          signal: controller1.signal,
+          keepalive: true,
         })
           .then((response) => {
+            clearTimeout(timeoutId1);
             if (!response.ok) {
               console.error("Web3Forms error:", response.status);
             }
           })
           .catch((error) => {
-            console.error("Web3Forms fetch error:", error);
+            clearTimeout(timeoutId1);
+            if (error.name === "AbortError") {
+              console.warn(
+                "Web3Forms timeout - возможна блокировка или медленное соединение",
+              );
+            } else {
+              console.error("Web3Forms fetch error:", error);
+            }
           });
       }
 
-      // Telegram Worker
+      // Telegram Worker с таймаутом 5 секунд
       if (telegramWorkerUrl) {
+        const controller2 = new AbortController();
+        const timeoutId2 = setTimeout(() => controller2.abort(), 5000);
+
         fetch(telegramWorkerUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -150,19 +165,28 @@ export default function ContactFormCard() {
             contactValue: formData.contactValue,
             message: formData.message,
           }),
+          signal: controller2.signal,
+          keepalive: true,
         })
           .then((response) => {
+            clearTimeout(timeoutId2);
             if (!response.ok) {
               console.error("Telegram Worker error:", response.status);
             }
           })
           .catch((error) => {
-            console.error("Telegram Worker fetch error:", error);
+            clearTimeout(timeoutId2);
+            if (error.name === "AbortError") {
+              console.warn(
+                "Telegram Worker timeout - возможна блокировка Cloudflare",
+              );
+            } else {
+              console.error("Telegram Worker fetch error:", error);
+            }
           });
       }
 
       // Оптимистичный UI - показываем успех сразу
-      // Небольшая задержка для UX (чтобы не выглядело подозрительно быстро)
       setTimeout(() => {
         setStatus("success");
         setFormData({
