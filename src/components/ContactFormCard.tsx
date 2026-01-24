@@ -16,9 +16,11 @@ export default function ContactFormCard() {
     contactValue: "",
     message: "",
   });
+
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const contactOptions = [
@@ -87,12 +89,49 @@ export default function ContactFormCard() {
     setStatus("loading");
 
     try {
-      const apiKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "DEMO_KEY";
+      const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "DEMO_KEY";
+      const telegramWorkerUrl = import.meta.env.PUBLIC_TELEGRAM_WORKER_URL;
 
-      if (apiKey === "DEMO_KEY") {
-        console.warn(
-          "Web3Forms API ключ не настроен. Форма работает в демо-режиме."
+      const promises: Promise<Response>[] = [];
+
+      if (web3formsKey !== "DEMO_KEY") {
+        promises.push(
+          fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              access_key: web3formsKey,
+              name: formData.name,
+              contact_type: contactOptions.find(
+                (opt) => opt.value === formData.contactType,
+              )?.label,
+              contact: formData.contactValue,
+              message: formData.message,
+              subject: `Новая заявка от ${formData.name} (${contactOptions.find((opt) => opt.value === formData.contactType)?.label})`,
+            }),
+          }),
         );
+      }
+
+      if (telegramWorkerUrl) {
+        promises.push(
+          fetch(telegramWorkerUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: formData.name,
+              contactType:
+                contactOptions.find((opt) => opt.value === formData.contactType)
+                  ?.label || formData.contactType,
+              contactValue: formData.contactValue,
+              message: formData.message,
+            }),
+          }),
+        );
+      }
+
+      if (promises.length === 0) {
+        console.warn("Форма работает в демо-режиме");
         setTimeout(() => {
           setStatus("success");
           setFormData({
@@ -106,22 +145,13 @@ export default function ContactFormCard() {
         return;
       }
 
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          access_key: apiKey,
-          name: formData.name,
-          contact_type: contactOptions.find(
-            (opt) => opt.value === formData.contactType
-          )?.label,
-          contact: formData.contactValue,
-          message: formData.message,
-          subject: `Новая заявка от ${formData.name} (${contactOptions.find((opt) => opt.value === formData.contactType)?.label})`,
-        }),
-      });
+      const results = await Promise.allSettled(promises);
 
-      if (response.ok) {
+      const hasSuccess = results.some(
+        (result) => result.status === "fulfilled" && result.value.ok,
+      );
+
+      if (hasSuccess) {
         setStatus("success");
         setFormData({
           name: "",
@@ -163,7 +193,6 @@ export default function ContactFormCard() {
       </div>
 
       <form onSubmit={handleSubmit} className="card-body">
-        {/* Имя с автофокусом */}
         <div className="input-wrapper">
           <label
             htmlFor="name"
@@ -186,7 +215,6 @@ export default function ContactFormCard() {
           />
         </div>
 
-        {/* Способ связи и контакт */}
         <div className="form-row">
           <div className="input-wrapper">
             <label
@@ -241,7 +269,6 @@ export default function ContactFormCard() {
           </div>
         </div>
 
-        {/* Сообщение */}
         <div className="input-wrapper">
           <label
             htmlFor="message"
@@ -265,7 +292,6 @@ export default function ContactFormCard() {
           />
         </div>
 
-        {/* Кнопка отправки */}
         <button
           type="submit"
           disabled={status === "loading"}
@@ -297,7 +323,6 @@ export default function ContactFormCard() {
           )}
         </button>
 
-        {/* Сообщение об успехе */}
         {status === "success" && (
           <div className="message message-success">
             <svg
@@ -318,7 +343,6 @@ export default function ContactFormCard() {
           </div>
         )}
 
-        {/* Сообщение об ошибке */}
         {status === "error" && (
           <div className="message message-error">
             <svg
