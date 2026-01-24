@@ -239,7 +239,7 @@ export default function ContactFormCard() {
             id="name"
             name="name"
             required
-            autoFocus
+            // autoFocus
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             onFocus={() => setFocusedField("name")}
