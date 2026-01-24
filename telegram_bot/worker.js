@@ -1,19 +1,29 @@
-// Cloudflare Worker для уведомлений в Telegram
+// Cloudflare Worker для Telegram уведомлений
+// Развернут на: https://telegram-notifier.standartsoftplus.workers.dev
+//
+// Назначение: Получает данные формы контактов и отправляет уведомления
+// в Telegram нескольким получателям
+//
+// Переменные окружения (Cloudflare Dashboard → Settings → Variables):
+//   - TELEGRAM_BOT_TOKEN: Токен бота от @BotFather
+//   - TELEGRAM_CHAT_ID_1: Chat ID первого получателя
+//   - TELEGRAM_CHAT_ID_2: Chat ID второго получателя
+
 export default {
   async fetch(request, env) {
-    // CORS headers
+    // CORS headers для разрешения запросов с сайта
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     };
 
-    // Обработка OPTIONS (preflight)
+    // Обработка preflight запроса
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders });
     }
 
-    // Только POST
+    // Принимаем только POST запросы
     if (request.method !== "POST") {
       return new Response("Method not allowed", {
         status: 405,
@@ -22,9 +32,10 @@ export default {
     }
 
     try {
+      // Парсинг данных формы
       const data = await request.json();
 
-      // Формирование сообщения
+      // Формирование красивого сообщения с эмодзи
       const message = `
 🔔 <b>Новая заявка с сайта</b>
 
@@ -37,12 +48,13 @@ ${data.message}
 ⏰ <i>${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" })}</i>
       `.trim();
 
-      // Отправка в Telegram (для обоих получателей)
+      // Получатели уведомлений
       const chatIds = [
-        env.TELEGRAM_CHAT_ID_1, // Ваш chat_id
-        env.TELEGRAM_CHAT_ID_2, // Chat_id партнера
+        env.TELEGRAM_CHAT_ID_1, // Первый получатель
+        env.TELEGRAM_CHAT_ID_2, // Второй получатель
       ];
 
+      // Параллельная отправка сообщений всем получателям
       const promises = chatIds.map((chatId) =>
         fetch(
           `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`,
@@ -60,6 +72,7 @@ ${data.message}
 
       await Promise.all(promises);
 
+      // Успешный ответ
       return new Response(JSON.stringify({ success: true }), {
         status: 200,
         headers: {
@@ -69,6 +82,8 @@ ${data.message}
       });
     } catch (error) {
       console.error("Error:", error);
+
+      // Ответ с ошибкой
       return new Response(
         JSON.stringify({
           success: false,
