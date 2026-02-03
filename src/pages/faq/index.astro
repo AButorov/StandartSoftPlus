@@ -3,14 +3,265 @@
 import Layout from '../../layouts/Layout.astro';
 
 const base = import.meta.env.BASE_URL;
+
+// JSON-LD микроразметка для SEO
+const faqData = [
+  // Блок 1: Стоимость и сроки
+  {
+    question: "Сколько стоит разработка мобильного приложения под iOS и Android?",
+    answer: "Бюджет рассчитывается индивидуально после утверждения ТЗ — от 100 000 до десятков млн рублей. Фиксированная смета исключает скрытые платежи и позволяет точно планировать инвестиции. Вы платите за конкретный результат, а не за неопределенный процесс разработки.",
+    icon: "layers"
+  },
+  {
+    question: "От чего зависит итоговая стоимость разработки сайта или сервиса?",
+    answer: "Цена формируется на основе трудозатрат: количества экранов, сложности бизнес-логики, интеграций с внешними сервисами, требований к безопасности. Стоимость фиксируется в договоре до начала работ и не меняется без изменения состава работ. Это гарантирует прозрачность бюджета на всех этапах.",
+    icon: "chart"
+  },
+  {
+    question: "Какая у вас почасовая ставка разработчика (Rate)?",
+    answer: "Мы не продаем часы — создаем готовый продукт под ключ. Вы платите за измеримый результат (работающий функционал), зафиксированный в договоре, а не за процесс написания кода. Это позволяет четко контролировать бюджет и понимать, за что перечисляются средства.",
+    icon: "clock"
+  },
+  {
+    question: "Вы работаете по фиксированной цене (Fixed Price) или по времени (Time & Material)?",
+    answer: "Работаем исключительно по Fixed Price. Стоимость и сроки закрепляются в Договоре авторского заказа до начала работ. Такой подход минимизирует финансовые риски и гарантирует получение готового продукта в рамках согласованного бюджета.",
+    icon: "contract"
+  },
+  {
+    question: "Сколько времени занимает разработка MVP (минимальной версии продукта)?",
+    answer: "Средний срок — 2–3 месяца. Период включает проектирование архитектуры, дизайн, разработку и тестирование. Четкая структура этапов позволяет быстро вывести продукт на рынок и начать получать обратную связь от пользователей.",
+    icon: "rocket"
+  },
+  {
+    question: "Можно ли ускорить разработку, если бюджет ограничен?",
+    answer: "Да, через концентрацию на MVP. Выделяем ключевые функции для запуска и проверки бизнес-гипотезы, исключая второстепенные возможности. Это сокращает сроки и бюджет первого релиза на 30–40%, позволяя быстрее выйти на рынок.",
+    icon: "speed"
+  },
+  {
+    question: "Когда и как происходит оплата (поэтапно, аванс, постоплата)?",
+    answer: "Используем поэтапную систему. Проект разбивается на спринты, каждый оплачивается авансом перед началом. Вы видите результат, подписываете акт и только после этого переходим к следующему блоку. Процесс финансирования прозрачен и управляем.",
+    icon: "payment"
+  },
+  {
+    question: "Входят ли налоги и комиссии в озвученную стоимость?",
+    answer: "Да, цена в договоре финальная. В неё включены налоги, комиссии, вознаграждение за отчуждение прав на ПО и стоимость лицензий. Вы точно знаете итоговую сумму без необходимости доплачивать сверху.",
+    icon: "document"
+  },
+
+  // Блок 2: Процесс работы
+  {
+    question: "Что нужно от меня для старта работ (ТЗ, дизайн, идея)?",
+    answer: "Достаточно сформулированной бизнес-идеи. Готовое ТЗ или дизайн-макеты не обязательны. На первичном собеседовании обсудим видение продукта, цели и аудиторию — этого хватит для старта предпроектной аналитики.",
+    icon: "idea"
+  },
+  {
+    question: "Помогаете ли вы составить Техническое Задание (ТЗ), если его нет?",
+    answer: "Да, разработка ТЗ — обязательный этап перед программированием. Документ является юридическим основанием для расчета сроков и стоимости. Подготовка занимает до 2-х недель — это инвестиция, которая страхует от размытых сроков и непредсказуемого результата.",
+    icon: "document-text"
+  },
+  {
+    question: "Как я буду следить за ходом работы и прогрессом?",
+    answer: "Через приемку этапов работ. Разработка разбита на логические части, демонстрируем результаты каждого этапа. Только после утверждения (подписания Акта) переходим к следующему. Полная прозрачность процесса на всех этапах.",
+    icon: "progress"
+  },
+  {
+    question: "Как часто мы будем созваниваться или списываться?",
+    answer: "Статус-митинги и переписка — раз в неделю. Ценим ваше время и работаем по принципу «сухо и по делу». Не отвлекаем по мелочам, но всегда на связи для оперативных вопросов.",
+    icon: "phone"
+  },
+  {
+    question: "Что происходит, если в процессе работы меняются требования к проекту?",
+    answer: "Несущественные правки (замена иконки, текста) вносим бесплатно. Существенные изменения (новые функции, изменение логики) оформляются через Доп. соглашение с новыми сроками и стоимостью. Это сохраняет прозрачность бюджета при изменении требований.",
+    icon: "edit"
+  },
+  {
+    question: "Кто тестирует приложение и исправляет баги?",
+    answer: "Обеспечиваем двухуровневый контроль: внутреннее тестирование QA и пользовательское тестирование (UAT) с вашей стороны. Все баги и несоответствия ТЗ исправляем за наш счет до финальной приемки. Это гарантирует качество продукта.",
+    icon: "check"
+  },
+  {
+    question: "Можно ли видеть промежуточные результаты до финальной сдачи?",
+    answer: "Да, доступ к результатам на каждом этапе. Не практикуем «черный ящик» — вы видите промежуточные версии, оперативно даете обратную связь и уверены, что разработка движется верно.",
+    icon: "eye"
+  },
+  {
+    question: "Работаете ли вы по договору и NDA (соглашению о неразглашении)?",
+    answer: "Да, всё в правовом поле. Заключаем Договор авторского заказа с передачей исключительных прав на ПО. По требованию подписываем NDA, обеспечивая полную конфиденциальность вашей идеи и данных.",
+    icon: "lock"
+  },
+  {
+    question: "Ой, я не люблю созвоны. А можно вы всё в переписке мне отправите — и всё?",
+    answer: "Короткий ответ: нет. Разработка приложения — это постоянный диалог. По переписке можно озвучить условия и понять базовые потребности, но докопаться до сути, разобраться в первостепенных задачах и понять, сходимся ли мы по подходу к работе, можно только в живом диалоге.",
+    icon: "message"
+  },
+
+  // Блок 3: Технологии
+  {
+    question: "Почему вы используете Firebase/Supabase, а не традиционные серверы?",
+    answer: "Firebase и Supabase — современные Backend-as-a-Service решения от Google и Open Source сообщества. Они сокращают время разработки бэкенда на 30–40%, обеспечивают мгновенную синхронизацию данных (Realtime) и масштабируются автоматически. Вам не нужен DevOps-инженер для настройки серверов — экономия бюджета и времени.",
+    icon: "server"
+  },
+  {
+    question: "Насколько безопасны данные в облаке (Firebase/Supabase)?",
+    answer: "Безопасность на уровне мировых стандартов. Платформы применяют шифрование SSL/TLS при передаче и хранении. Настраиваем Row Level Security (RLS) — доступ на уровне строк БД. Каждый пользователь видит только свои данные, утечки исключены.",
+    icon: "shield"
+  },
+  {
+    question: "Что такое Serverless и как это экономит бюджет на поддержке?",
+    answer: "Serverless — оплата за фактически использованные ресурсы, а не за простаивающий сервер. Нет фиксированных ежемесячных платежей за железо и не нужен системный администратор — это ответственность облачного провайдера. Вы платите за результат работы кода, а не за его ожидание.",
+    icon: "cloud"
+  },
+  {
+    question: "Можно ли потом перенести проект с Firebase на свой собственный сервер?",
+    answer: "Да, архитектура не тупиковая. С Supabase переезд прост (под капотом PostgreSQL). С Firebase миграция возможна через экспорт данных и адаптацию бэкенда. При необходимости поможем с переездом на собственную инфраструктуру.",
+    icon: "transfer"
+  },
+  {
+    question: "Используете ли вы готовые шаблоны или пишете код с нуля?",
+    answer: "Комбинированный подход для оптимизации бюджета. Используем собственные архитектурные модули, проверенные на десятках проектов. Это не дешевые шаблоны из интернета, а качественные заготовки, сокращающие время разработки стандартных функций на 20–30%. Уникальная логика и дизайн реализуются индивидуально.",
+    icon: "code"
+  },
+  {
+    question: "Кому принадлежит исходный код (Git) после завершения и оплаты?",
+    answer: "Все права переходят Заказчику. Это ключевое условие договора — полное отчуждение исключительных прав на ПО. После оплаты получаете доступ к репозиториям (Git), исходникам и дизайн-макетам. Вы — полноправный владелец продукта.",
+    icon: "git"
+  },
+  {
+    question: "После разработки приложение становится моим или я им просто управляю, а все права у вас?",
+    answer: "После оплаты все исключительные права переходят к вам. Передаем исходный код, дизайн и документацию по Акту. В сторах (App Store, Google Play) владелец и издатель — ваша компания. Вся выручка от монетизации поступает на ваш счет без нашего участия.",
+    icon: "layers"
+  },
+  {
+    question: "Я видел на фрилансе в 3 раза дешевле. От чего, кроме опыта, формируется цена?",
+    answer: "Цена складывается из аналитики, погружения в продукт, анализа рынка, выстраивания корректной архитектуры, процесса согласования и ответственности за результат. За меньшую цену вы рискуете не только качеством готового продукта, но и можете остаться с неработающим приложением. Скупой платит дважды.",
+    icon: "chart"
+  },
+  {
+    question: "А я вам сейчас расскажу свою идею. Где гарантии, что вы её не украдёте?",
+    answer: "Идею саму по себе запатентовать невозможно. На первоначальном этапе никто не запрашивает суперсекретную информацию, но проект в общих чертах необходимо обсудить, чтобы понять, можем ли мы за это взяться.",
+    icon: "lock"
+  },
+  {
+    question: "А если мне не понравится? А если я передумаю в процессе?",
+    answer: "Для этого существуют бриф, ТЗ, правки и согласование этапов, зумы и промежуточные проверки. Выстроили систему поэтапной разработки, чтобы на каждом этапе вы видели ход работы и корректировали детали. Если что-то не нравится, вносим правки в пределах договорённостей и доводим до устраивающего результата.",
+    icon: "check"
+  },
+
+  // Блок 4: Веб-сервисы
+  {
+    question: "Делаете ли вы PWA (сайты, работающие как приложения)?",
+    answer: "Да, активно разрабатываем Progressive Web Apps. Технология позволяет сайту работать как мобильное приложение: установка на главный экран без скачивания из Store, работа офлайн, push-уведомления. Отличное решение для быстрого охвата мобильной аудитории с экономией бюджета на нативных приложениях.",
+    icon: "mobile"
+  },
+  {
+    question: "Будет ли сайт оптимизирован для SEO (поисковиков)?",
+    answer: "Базовая техническая SEO закладывается на этапе архитектуры. Создаем правильную структуру URL, настраиваем мета-теги, карту сайта (sitemap.xml) и Server-Side Rendering для роботов. Прочный фундамент позволяет маркетологу сразу приступить к продвижению в Яндекс и Google без переделки кода.",
+    icon: "search"
+  },
+  {
+    question: "Насколько быстро будет загружаться сайт (Google PageSpeed)?",
+    answer: "Применяем современные методы оптимизации: сжатие изображений, lazy loading, минификацию кода, кеширование. Цель — «зеленая зона» в PageSpeed Insights. Мгновенная загрузка даже на медленном мобильном интернете напрямую влияет на конверсию и позиции в поиске.",
+    icon: "speed"
+  },
+  {
+    question: "Смогу ли я сам менять текст и картинки на сайте (админка)?",
+    answer: "Да, полная независимость от разработчиков. Интегрируем удобную CMS, спроектированную под ваши задачи. Сможете обновлять тексты, менять баннеры, добавлять товары без знания программирования. Получаете инструмент для управления бизнесом, а не статический набор страниц.",
+    icon: "edit"
+  },
+
+  // Блок 5: Поддержка
+  {
+    question: "Что входит в бесплатный гарантийный период после релиза?",
+    answer: "В течение 1–3 месяцев бесплатно устраняем баги, возникшие по нашей вине. Гарантия распространяется на несоответствие ТЗ. Если кнопка не работает или форма не отправляется — исправим оперативно и за свой счет. Доработки нового функционала оцениваются отдельно.",
+    icon: "shield"
+  },
+  {
+    question: "Сколько стоит техническая поддержка приложения в месяц?",
+    answer: "Стоимость SLA рассчитывается индивидуально и фиксируется в Договоре на техподдержку. Либо абонентская плата за доступность команды, либо оплата фактических часов (Time & Material). Цена зависит от скорости реакции, объема мониторинга и сложности инфраструктуры.",
+    icon: "support"
+  },
+  {
+    question: "Как выпускать обновления после публикации в сторах?",
+    answer: "Hotfix (устранение ошибок) выпускаем оперативно. Новый функционал — полноценный цикл: согласование ТЗ, разработка, тестирование, публикация новой версии в App Store и Google Play. Каждое обновление проходит модерацию магазинов.",
+    icon: "update"
+  },
+  {
+    question: "Где физически хранятся данные пользователей (хостинг, серверы)?",
+    answer: "Решение принимает Заказчик как владелец продукта. Данные размещаются на арендованных вами серверах или облачных мощностях. Помогаем с выбором провайдера (в т.ч. РФ для 152-ФЗ) и настройкой, юридически доступ под вашим контролем.",
+    icon: "server"
+  },
+  {
+    question: "Что делать, если сайт упадет или перестанет работать ночью?",
+    answer: "Порядок регламентируется Договором SLA. При его наличии команда мониторинга получит уведомление и немедленно восстановит работоспособность (даже ночью). Без договора поддержки работы выполняются в рабочие часы в порядке очереди.",
+    icon: "alert"
+  },
+  {
+    question: "Передаете ли вы документацию по проекту другой команде?",
+    answer: "Да, обеспечиваем полную отчуждаемость. Передаем исходный код, техническую документацию (архитектура, инструкции по развертыванию, доступы). Это позволяет передать поддержку любой квалифицированной команде без «эффекта привязки» к нашей студии.",
+    icon: "document-text"
+  }
+];
+
+// JSON-LD схема для SEO
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqData.map(item => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
+};
+
+// Функция для получения SVG иконки
+function getIcon(iconName: string) {
+  const icons = {
+    layers: '<path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    chart: '<path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    clock: '<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+    contract: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    rocket: '<path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    speed: '<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    payment: '<rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M2 10h20" stroke="currentColor" stroke-width="2"/>',
+    document: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/><path d="M14 2v6h6M10 13h4M10 17h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+    idea: '<path d="M9 18h6M10 22h4M15 8a5 5 0 10-6 0c0 2.5 3 4 3 4v1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    'document-text': '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/><path d="M14 2v6h6M10 13h4M10 17h4M10 9h1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+    progress: '<path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    phone: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    edit: '<path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    check: '<path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>',
+    eye: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>',
+    lock: '<rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+    message: '<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    server: '<rect x="2" y="2" width="20" height="8" rx="2" stroke="currentColor" stroke-width="2"/><rect x="2" y="14" width="20" height="8" rx="2" stroke="currentColor" stroke-width="2"/><path d="M6 6h.01M6 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+    shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    cloud: '<path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    transfer: '<path d="M17 3l4 4-4 4M7 13l-4 4 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 7h-9a4 4 0 00-4 4v3M3 17h9a4 4 0 004-4V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    code: '<path d="M16 18l6-6-6-6M8 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    git: '<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    mobile: '<rect x="5" y="2" width="14" height="20" rx="2" stroke="currentColor" stroke-width="2"/><path d="M12 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+    search: '<circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    support: '<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+    update: '<path d="M21 2v6h-6M3 12a9 9 0 0115-6.7L21 8M3 22v-6h6M21 12a9 9 0 01-15 6.7L3 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    alert: '<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+  };
+  
+  return icons[iconName as keyof typeof icons] || icons.layers;
+}
 ---
 
 <Layout title="Вопросы и ответы - StandartSoft Plus">
+  <!-- JSON-LD микроразметка для SEO -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
   <section class="hero-section">
     <div class="hero-container">
       <div class="hero-content">
         <h1>Вопросы и ответы</h1>
-        <p class="slogan">Часто задаваемые вопросы о наших услугах</p>
+        <p class="slogan">Прозрачные ответы на ключевые вопросы о разработке мобильных приложений и веб-сервисов</p>
       </div>
       <div class="hero-decoration">
         <div class="decoration-circle">
@@ -26,110 +277,100 @@ const base = import.meta.env.BASE_URL;
 
   <section class="faq-content">
     <div class="container">
-      <!-- Вопрос 1: Права на приложение -->
-      <div class="faq-item">
-        <div class="faq-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="faq-text">
-          <h3>После разработки приложение становится моим или я им просто управляю, а все права у вас?</h3>
-          <p>
-            После окончания разработки мы по договору передаём исходный код и закрываем это актами. 
-            <strong>Все права интеллектуальной собственности остаются у заказчика.</strong> В сторах разработчиком 
-            проекта также является заказчик, а все средства, полученные от приложения, поступают на ваш счёт.
-          </p>
-        </div>
+      <!-- Блок 1: Стоимость и сроки -->
+      <div class="section-header">
+        <h2>Стоимость и сроки разработки</h2>
       </div>
+      
+      {faqData.slice(0, 8).map((item) => (
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
+          </div>
+          <div class="faq-text">
+            <h3 itemprop="name">{item.question}</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+              <p itemprop="text">{item.answer}</p>
+            </div>
+          </div>
+        </div>
+      ))}
 
-      <!-- Вопрос 2: Цена -->
-      <div class="faq-item">
-        <div class="faq-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="faq-text">
-          <h3>Я видел на фрилансе в 3 раза дешевле. От чего, кроме опыта, формируется цена?</h3>
-          <p>
-            Цена складывается не только из опыта, но и из аналитики, погружения в продукт, анализа рынка, 
-            выстраивания корректной архитектуры приложения, процесса согласования и ответственности за результат.
-          </p>
-          <p>
-            За меньшую цену вы можете потерять не только в качестве готового продукта, но и, возможно, 
-            даже не дойти до этого этапа, оставшись наедине с неработающим приложением и парочкой нарисованных экранов. 
-            Пронесёт ли вас и получите ли вы качественный продукт — мы не знаем, но, как гласит известная пословица, 
-            <strong>скупой платит дважды.</strong>
-          </p>
-        </div>
+      <!-- Блок 2: Процесс работы и контроль -->
+      <div class="section-header">
+        <h2>Процесс работы и контроль</h2>
       </div>
+      
+      {faqData.slice(8, 18).map((item) => (
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
+          </div>
+          <div class="faq-text">
+            <h3 itemprop="name">{item.question}</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+              <p itemprop="text">{item.answer}</p>
+            </div>
+          </div>
+        </div>
+      ))}
 
-      <!-- Вопрос 3: Кража идеи -->
-      <div class="faq-item">
-        <div class="faq-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
-            <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="faq-text">
-          <h3>А я вам сейчас расскажу свою идею. Где гарантии, что вы её не украдёте?</h3>
-          <p>
-            Идею саму по себе запатентовать невозможно. К тому же на первоначальном этапе у вас никто 
-            не будет запрашивать суперсекретную информацию, но проект в общих чертах нам необходимо 
-            обсудить, чтобы понять, можем ли мы за это взяться или нет.
-          </p>
-        </div>
+      <!-- Блок 3: Технологии и подход -->
+      <div class="section-header">
+        <h2>Технологии и подход</h2>
       </div>
+      
+      {faqData.slice(18, 28).map((item) => (
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
+          </div>
+          <div class="faq-text">
+            <h3 itemprop="name">{item.question}</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+              <p itemprop="text">{item.answer}</p>
+            </div>
+          </div>
+        </div>
+      ))}
 
-      <!-- Вопрос 4: Что если не понравится -->
-      <div class="faq-item">
-        <div class="faq-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-          </svg>
-        </div>
-        <div class="faq-text">
-          <h3>А если мне не понравится? А если я передумаю в процессе?</h3>
-          <p>
-            Для этого и существуют бриф, ТЗ, правки и согласование этапов, зумы и промежуточные проверки. 
-            <strong>Мы выстроили систему поэтапной разработки</strong>, чтобы на каждом этапе вы могли 
-            видеть ход работы и при необходимости корректировать детали вместе с командой.
-          </p>
-          <p>
-            Если что-то не нравится, то в пределах договорённостей мы вносим правки и доводим приложение 
-            до результата, который вас устраивает.
-          </p>
-        </div>
+      <!-- Блок 4: Сайты и веб-сервисы -->
+      <div class="section-header">
+        <h2>Сайты и веб-сервисы</h2>
       </div>
+      
+      {faqData.slice(28, 32).map((item) => (
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
+          </div>
+          <div class="faq-text">
+            <h3 itemprop="name">{item.question}</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+              <p itemprop="text">{item.answer}</p>
+            </div>
+          </div>
+        </div>
+      ))}
 
-      <!-- Вопрос 5: Без созвонов -->
-      <div class="faq-item">
-        <div class="faq-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="faq-text">
-          <h3>Ой, я не люблю созвоны. А можно вы всё в переписке мне отправите — и всё?</h3>
-          <p>
-            К таким сразу много вопросов.
-          </p>
-          <p>
-            <strong>Короткий ответ: нет.</strong> Разработка приложения — это сложный и длительный процесс, 
-            и это постоянный диалог. По переписке я могу озвучить условия и понять, что вам нужно.
-          </p>
-          <p>
-            Но я не смогу нормально разобраться в вашей ситуации: какие у вас первостепенные задачи, 
-            что для вас важно и как вы видите сотрудничество. Докопаться до сути и понять, сходимся ли 
-            мы по подходу к работе и видению, можно только в формате живого диалога.
-          </p>
-        </div>
+      <!-- Блок 5: Поддержка и гарантии -->
+      <div class="section-header">
+        <h2>Поддержка и гарантии</h2>
       </div>
+      
+      {faqData.slice(32).map((item) => (
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
+          </div>
+          <div class="faq-text">
+            <h3 itemprop="name">{item.question}</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+              <p itemprop="text">{item.answer}</p>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   </section>
 
@@ -261,6 +502,25 @@ const base = import.meta.env.BASE_URL;
     text-align: center;
   }
 
+  .section-header {
+    margin: 3rem 0 2rem 0;
+  }
+
+  .section-header:first-child {
+    margin-top: 0;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 2rem;
+    color: var(--color-primary);
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid var(--color-secondary);
+    background: none;
+    -webkit-text-fill-color: var(--color-primary);
+  }
+
   .faq-item {
     display: flex;
     gap: 2rem;
@@ -315,10 +575,6 @@ const base = import.meta.env.BASE_URL;
     color: var(--color-text);
     opacity: 0.85;
     line-height: 1.7;
-    margin-bottom: 1rem;
-  }
-
-  .faq-text p:last-child {
     margin-bottom: 0;
   }
 
@@ -399,6 +655,10 @@ const base = import.meta.env.BASE_URL;
     .decoration-circle svg {
       width: 75px;
       height: 75px;
+    }
+
+    .section-header h2 {
+      font-size: 1.5rem;
     }
 
     .faq-item {
