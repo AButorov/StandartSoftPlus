@@ -51,6 +51,15 @@ import ContactFormCard from '../../components/ContactFormCard';
         <p><a href="https://wa.me/message/LMKD6EFXHIOEF1" target="_blank">Написать в WhatsApp</a></p>
       </div>
 
+      <div class="contact-card max-card">
+        <div class="contact-icon max-icon">
+          <img src="/max-messenger-logo.jpg" alt="Max" class="max-logo" />
+        </div>
+        <h3>Max</h3>
+        <!-- <p><a href="#" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;">Скоро будет доступно</a></p> -->
+        <p><a href="https://max.ru/u/f9LHodD0cOIF-lUdv5TVyfbUnok1ixgZDmKsEx_eP-7zWLFLWpap7E7v3xA" target="_blank">Написать в Max</a></p> 
+      </div>
+
       <div class="contact-card phone-card">
         <div class="contact-icon phone-icon">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -420,6 +429,13 @@ import ContactFormCard from '../../components/ContactFormCard';
     height: 32px;
   }
 
+  /* Стили для MAX логотипа - увеличенный размер */
+  .max-logo {
+    width: 62px;
+    height: 62px;
+    object-fit: contain;
+  }
+
   /* Фирменные стили каналов связи */
   .telegram-card:hover {
     border-color: #0088cc;
@@ -435,6 +451,14 @@ import ContactFormCard from '../../components/ContactFormCard';
 
   .whatsapp-icon {
     background: linear-gradient(135deg, #25D366, #128C7E);
+  }
+
+  .max-card:hover {
+    border-color: #7B5FFF;
+  }
+
+  .max-icon {
+    background: white;
   }
 
   .phone-card:hover {
