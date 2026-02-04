@@ -278,99 +278,139 @@ function getIcon(iconName: string) {
   <section class="faq-content">
     <div class="container">
       <!-- Блок 1: Стоимость и сроки -->
-      <div class="section-header">
-        <h2>Стоимость и сроки разработки</h2>
-      </div>
-      
-      {faqData.slice(0, 8).map((item) => (
-        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <div class="faq-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
-          </div>
-          <div class="faq-text">
-            <h3 itemprop="name">{item.question}</h3>
-            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-              <p itemprop="text">{item.answer}</p>
-            </div>
+      <div class="faq-section">
+        <div class="section-header">
+          <h2>Стоимость и сроки разработки</h2>
+          <div class="section-toggle">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
         </div>
-      ))}
+        <div class="section-content">
+          {faqData.slice(0, 8).map((item) => (
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+              <div class="faq-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
+              </div>
+              <div class="faq-text">
+                <h3 itemprop="name">{item.question}</h3>
+                <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                  <p itemprop="text">{item.answer}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <!-- Блок 2: Процесс работы и контроль -->
-      <div class="section-header">
-        <h2>Процесс работы и контроль</h2>
-      </div>
-      
-      {faqData.slice(8, 18).map((item) => (
-        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <div class="faq-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
-          </div>
-          <div class="faq-text">
-            <h3 itemprop="name">{item.question}</h3>
-            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-              <p itemprop="text">{item.answer}</p>
-            </div>
+      <div class="faq-section">
+        <div class="section-header">
+          <h2>Процесс работы и контроль</h2>
+          <div class="section-toggle">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
         </div>
-      ))}
+        <div class="section-content">
+          {faqData.slice(8, 18).map((item) => (
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+              <div class="faq-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
+              </div>
+              <div class="faq-text">
+                <h3 itemprop="name">{item.question}</h3>
+                <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                  <p itemprop="text">{item.answer}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <!-- Блок 3: Технологии и подход -->
-      <div class="section-header">
-        <h2>Технологии и подход</h2>
-      </div>
-      
-      {faqData.slice(18, 28).map((item) => (
-        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <div class="faq-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
-          </div>
-          <div class="faq-text">
-            <h3 itemprop="name">{item.question}</h3>
-            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-              <p itemprop="text">{item.answer}</p>
-            </div>
+      <div class="faq-section">
+        <div class="section-header">
+          <h2>Технологии и подход</h2>
+          <div class="section-toggle">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
         </div>
-      ))}
+        <div class="section-content">
+          {faqData.slice(18, 28).map((item) => (
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+              <div class="faq-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
+              </div>
+              <div class="faq-text">
+                <h3 itemprop="name">{item.question}</h3>
+                <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                  <p itemprop="text">{item.answer}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <!-- Блок 4: Сайты и веб-сервисы -->
-      <div class="section-header">
-        <h2>Сайты и веб-сервисы</h2>
-      </div>
-      
-      {faqData.slice(28, 32).map((item) => (
-        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <div class="faq-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
-          </div>
-          <div class="faq-text">
-            <h3 itemprop="name">{item.question}</h3>
-            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-              <p itemprop="text">{item.answer}</p>
-            </div>
+      <div class="faq-section">
+        <div class="section-header">
+          <h2>Сайты и веб-сервисы</h2>
+          <div class="section-toggle">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
         </div>
-      ))}
+        <div class="section-content">
+          {faqData.slice(28, 32).map((item) => (
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+              <div class="faq-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
+              </div>
+              <div class="faq-text">
+                <h3 itemprop="name">{item.question}</h3>
+                <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                  <p itemprop="text">{item.answer}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <!-- Блок 5: Поддержка и гарантии -->
-      <div class="section-header">
-        <h2>Поддержка и гарантии</h2>
-      </div>
-      
-      {faqData.slice(32).map((item) => (
-        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-          <div class="faq-icon">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
-          </div>
-          <div class="faq-text">
-            <h3 itemprop="name">{item.question}</h3>
-            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-              <p itemprop="text">{item.answer}</p>
-            </div>
+      <div class="faq-section">
+        <div class="section-header">
+          <h2>Поддержка и гарантии</h2>
+          <div class="section-toggle">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
         </div>
-      ))}
+        <div class="section-content">
+          {faqData.slice(32).map((item) => (
+            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+              <div class="faq-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" set:html={getIcon(item.icon)} />
+              </div>
+              <div class="faq-text">
+                <h3 itemprop="name">{item.question}</h3>
+                <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                  <p itemprop="text">{item.answer}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
@@ -382,6 +422,24 @@ function getIcon(iconName: string) {
       <a href={`${base}contacts/`} class="btn btn-primary">Связаться с нами</a>
     </div>
   </section>
+
+  <script>
+    // Аккордеон для секций FAQ
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('.faq-section');
+      
+      sections.forEach(section => {
+        const header = section.querySelector('.section-header');
+        
+        if (header) {
+          header.addEventListener('click', () => {
+            // Переключить текущую секцию
+            section.classList.toggle('active');
+          });
+        }
+      });
+    });
+  </script>
 </Layout>
 
 <style>
@@ -502,47 +560,102 @@ function getIcon(iconName: string) {
     text-align: center;
   }
 
-  .section-header {
-    margin: 3rem 0 2rem 0;
+  /* Секции FAQ с аккордеоном */
+  .faq-section {
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(61, 17, 57, 0.08);
+    border: 1px solid rgba(61, 17, 57, 0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
   }
 
-  .section-header:first-child {
-    margin-top: 0;
+  .faq-section:hover {
+    box-shadow: 0 6px 25px rgba(61, 17, 57, 0.12);
+  }
+
+  .faq-section.active {
+    border-color: var(--color-secondary);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 2.5rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s ease;
+  }
+
+  .section-header:hover {
+    background: rgba(61, 17, 57, 0.02);
   }
 
   .section-header h2 {
     font-family: var(--font-heading);
     font-weight: 300;
-    font-size: 2rem;
+    font-size: 1.75rem;
     color: var(--color-primary);
-    padding-bottom: 0.75rem;
-    border-bottom: 3px solid var(--color-secondary);
+    margin: 0;
     background: none;
     -webkit-text-fill-color: var(--color-primary);
+    flex: 1;
   }
 
+  .section-toggle {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-secondary);
+    transition: transform 0.3s ease;
+  }
+
+  .faq-section.active .section-toggle {
+    transform: rotate(180deg);
+  }
+
+  .section-toggle svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Контент секции (скрывается/показывается) */
+  .section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
+
+  .faq-section.active .section-content {
+    max-height: 10000px;
+  }
+
+  /* Отдельные вопросы внутри секции */
   .faq-item {
     display: flex;
     gap: 2rem;
-    background: white;
-    padding: 2.5rem;
-    margin-bottom: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(61, 17, 57, 0.08);
-    border: 1px solid rgba(61, 17, 57, 0.05);
-    transition: all 0.3s ease;
+    padding: 2rem 2.5rem;
+    border-top: 1px solid rgba(61, 17, 57, 0.05);
+    transition: background 0.2s ease;
   }
 
   .faq-item:hover {
-    box-shadow: 0 8px 30px rgba(61, 17, 57, 0.12);
-    border-color: var(--color-secondary);
-    transform: translateY(-2px);
+    background: rgba(61, 17, 57, 0.02);
+  }
+
+  .faq-item:first-child {
+    border-top: none;
   }
 
   .faq-icon {
     flex-shrink: 0;
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -552,8 +665,8 @@ function getIcon(iconName: string) {
   }
 
   .faq-icon svg {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
 
   .faq-text {
@@ -564,8 +677,8 @@ function getIcon(iconName: string) {
     font-family: var(--font-heading);
     font-weight: 300;
     color: var(--color-primary);
-    margin-bottom: 1rem;
-    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
     line-height: 1.4;
     background: none;
     -webkit-text-fill-color: var(--color-primary);
@@ -575,7 +688,7 @@ function getIcon(iconName: string) {
     color: var(--color-text);
     opacity: 0.85;
     line-height: 1.7;
-    margin-bottom: 0;
+    margin: 0;
   }
 
   .faq-text strong {
@@ -657,28 +770,42 @@ function getIcon(iconName: string) {
       height: 75px;
     }
 
+    .section-header {
+      padding: 1.5rem;
+    }
+
     .section-header h2 {
-      font-size: 1.5rem;
+      font-size: 1.35rem;
+    }
+
+    .section-toggle {
+      width: 28px;
+      height: 28px;
+    }
+
+    .section-toggle svg {
+      width: 28px;
+      height: 28px;
     }
 
     .faq-item {
       flex-direction: column;
       gap: 1.5rem;
-      padding: 2rem;
+      padding: 1.5rem;
     }
 
     .faq-icon {
-      width: 56px;
-      height: 56px;
+      width: 48px;
+      height: 48px;
     }
 
     .faq-icon svg {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
     }
 
     .faq-text h3 {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     .cta-section h2 {
