@@ -1,6 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/hero.astro';
+import { getCollection } from 'astro:content';
+
+// Загружаем услуги из Content Collections
+const allServices = await getCollection('services');
+const services = allServices.sort((a, b) => a.data.order - b.data.order);
 
 const base = import.meta.env.BASE_URL;
 ---
@@ -22,107 +27,25 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
-  <!-- Услуги -->
+  <!-- Услуги (ДИНАМИЧЕСКИЕ) -->
   <section id="services" class="services-section">
     <div class="container">
       <h2 class="text-center">Наши услуги</h2>
       
       <div class="services-grid">
-        <!-- Мобильная разработка -->
-        <div class="card service-card">
-          <div class="service-icon">📱</div>
-          <h3>Мобильные приложения</h3>
-          <p>
-            Разработка нативных и кросс-платформенных приложений для iOS и Android. 
-            Используем современные технологии для создания быстрых и надёжных решений.
-          </p>
-          <ul class="service-features">
-            <li>iOS (Swift) и Android (Kotlin)</li>
-            <li>React Native / Flutter</li>
-            <li>Интеграция с API и облачными сервисами</li>
-            <li>Push-уведомления и геолокация</li>
-          </ul>
-        </div>
-        
-        <!-- Веб-разработка -->
-        <div class="card service-card">
-          <div class="service-icon">💻</div>
-          <h3>Веб-разработка</h3>
-          <p>
-            Современные веб-приложения и сайты на актуальных фреймворках. 
-            Фокус на производительность, SEO и пользовательский опыт.
-          </p>
-          <ul class="service-features">
-            <li>React, Vue, Astro</li>
-            <li>TypeScript / JavaScript</li>
-            <li>Адаптивный дизайн</li>
-            <li>Оптимизация производительности</li>
-          </ul>
-        </div>
-        
-        <!-- Backend и API -->
-        <div class="card service-card">
-          <div class="service-icon">⚙️</div>
-          <h3>Backend & API</h3>
-          <p>
-            Разработка серверной части приложений, REST API и интеграций. 
-            Облачные решения для масштабируемых проектов.
-          </p>
-          <ul class="service-features">
-            <li>Node.js / TypeScript</li>
-            <li>Firebase / Supabase</li>
-            <li>REST API и WebSocket</li>
-            <li>Базы данных и кэширование</li>
-          </ul>
-        </div>
-        
-        <!-- UI/UX дизайн -->
-        <div class="card service-card">
-          <div class="service-icon">🎨</div>
-          <h3>UI/UX дизайн</h3>
-          <p>
-            Проектирование интерфейсов с фокусом на удобство пользователя. 
-            Минималистичный, современный и практичный дизайн.
-          </p>
-          <ul class="service-features">
-            <li>Прототипирование в Figma</li>
-            <li>Дизайн-системы</li>
-            <li>Пользовательские исследования</li>
-            <li>A/B тестирование интерфейсов</li>
-          </ul>
-        </div>
-        
-        <!-- Автоматизация -->
-        <div class="card service-card">
-          <div class="service-icon">🤖</div>
-          <h3>Автоматизация бизнеса</h3>
-          <p>
-            CRM-системы, административные панели и внутренние инструменты 
-            для оптимизации бизнес-процессов.
-          </p>
-          <ul class="service-features">
-            <li>Административные панели</li>
-            <li>CRM и ERP системы</li>
-            <li>Интеграция сервисов</li>
-            <li>Аналитика и отчёты</li>
-          </ul>
-        </div>
-        
-        <!-- Консультации -->
-        <div class="card service-card">
-          <div class="service-icon">💡</div>
-          <h3>Технические консультации</h3>
-          <p>
-            Аудит кода, выбор технологического стека, 
-            архитектура проектов и Code Review.
-          </p>
-          <ul class="service-features">
-            <li>Аудит существующих проектов</li>
-            <li>Подбор технологий</li>
-            <li>Code Review</li>
-            <li>Рекомендации по оптимизации</li>
-          </ul>
-        </div>
+        {services.map((service) => (
+          <div class="card service-card">
+            <div class="service-icon">{service.data.icon}</div>
+            <h3>{service.data.title}</h3>
+            <p>{service.data.description}</p>
+            
+            <ul class="service-features">
+              {service.data.features.map((feature) => (
+                <li>{feature}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </div>
   </section>
