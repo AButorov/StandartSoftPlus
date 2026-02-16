@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import CTABlock from '../../components/CTABlock.astro';
 
 const base = import.meta.env.BASE_URL;
 const services = await getCollection('services');
@@ -60,16 +61,10 @@ const sortedServices = services.sort((a, b) => a.data.order - b.data.order);
     </div>
   </section>
 
-  <!-- CTA блок -->
-  <section class="services-cta">
-    <div class="services-container">
-      <div class="cta-card">
-        <h2>Не нашли нужную услугу?</h2>
-        <p>Свяжитесь с нами, и мы обсудим индивидуальное решение для вашего бизнеса</p>
-        <a href={`${base}contacts/`} class="btn btn-primary">Связаться с нами</a>
-      </div>
-    </div>
-  </section>
+  <CTABlock 
+    title="Не нашли нужную услугу?"
+    description="Свяжитесь с нами, и мы обсудим индивидуальное решение для вашего бизнеса"
+  />
 </Layout>
 
 <style>

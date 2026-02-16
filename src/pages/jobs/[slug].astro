@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import CTABlock from '../../components/CTABlock.astro';
 
 const base = import.meta.env.BASE_URL;
 
@@ -59,17 +60,11 @@ const { Content } = await job.render();
     </div>
   </section>
 
-  <!-- CTA блок -->
-  <section class="project-cta">
-    <div class="project-container">
-      <div class="cta-card">
-        <h2>Обсудим ваш проект?</h2>
-        <p>Расскажите о своей идее, и мы предложим оптимальное решение</p>
-        <a href={`${base}contacts/`} class="btn btn-primary">Связаться с нами</a>
-      </div>
-    </div>
-  </section>
-
+  <CTABlock 
+    title="Обсудим ваш проект?"
+    description="Расскажите о своей идее, и мы предложим оптимальное решение"
+    buttonText="Связаться с нами"
+  />
   <!-- Навигация к другим проектам -->
   <section class="project-navigation">
     <div class="project-container">

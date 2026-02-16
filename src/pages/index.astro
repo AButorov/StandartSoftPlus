@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/hero.astro';
 import ServicesCarousel from '../components/ServicesCarousel.astro';
+import CTABlock from '../components/CTABlock.astro';
 
 const base = import.meta.env.BASE_URL;
 ---
@@ -40,19 +41,11 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
-  <!-- Контакты (краткая версия) -->
-  <section id="contacts-preview" class="contacts-preview-section">
-    <div class="container">
-      <h2 class="text-center">Свяжитесь с нами</h2>
-      <p class="section-description text-center">
-        Обсудим ваш проект и предложим оптимальное решение
-      </p>
-      
-      <div class="contacts-cta">
-        <a href={`${base}contacts/`} class="btn btn-secondary">Связаться</a>
-      </div>
-    </div>
-  </section>
+  <CTABlock 
+    title="Свяжитесь с нами"
+    description="Обсудим ваш проект и предложим оптимальное решение"
+    buttonText="Связаться"
+  />
 </Layout>
 
 <style>
