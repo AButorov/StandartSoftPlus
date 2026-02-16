@@ -76,7 +76,7 @@ const { Content } = await service.render();
   <!-- Навигация к другим услугам -->
   <section class="service-navigation">
     <div class="service-container">
-      <a href={`${base}#services`} class="back-link">
+      <a href={`${base}services/`} class="back-link" id="back-to-services" data-base-url={base}>
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M19 12H5M5 12l7 7m-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -396,9 +396,48 @@ const { Content } = await service.render();
 </style>
 
 <script>
+  // Умная навигация назад
+  function setupSmartBackNavigation() {
+    const backLink = document.getElementById('back-to-services') as HTMLAnchorElement | null;
+    if (!backLink) return;
+
+    const baseUrl = backLink.getAttribute('data-base-url') || '/';
+    const referrer = document.referrer;
+
+    // Проверяем откуда пришел пользователь
+    if (referrer) {
+      try {
+        const referrerUrl = new URL(referrer);
+        const currentUrl = new URL(window.location.href);
+        
+        // Проверяем что это тот же сайт
+        if (referrerUrl.origin === currentUrl.origin) {
+          const referrerPath = referrerUrl.pathname;
+          
+          // Если пришли с главной страницы - ведем на главную с якорем
+          if (referrerPath === baseUrl || referrerPath === baseUrl + 'index.html' || referrerPath === baseUrl.replace(/\/$/, '')) {
+            backLink.href = baseUrl + '#services';
+            return;
+          }
+          
+          // Если пришли со страницы services - ведем на services
+          if (referrerPath.includes('/services/') && referrerPath !== currentUrl.pathname) {
+            backLink.href = baseUrl + 'services/';
+            return;
+          }
+        }
+      } catch (e) {
+        // Ошибка парсинга URL - используем дефолт
+      }
+    }
+    
+    // По умолчанию ведем на страницу всех услуг
+    backLink.href = baseUrl + 'services/';
+  }
+
   // Исправление путей изображений для GitHub Pages
   function fixImagePaths() {
-    const content = document.querySelector('.service-content');
+    const content = document.querySelector('.service-content') as HTMLElement | null;
     if (!content) return;
 
     const basePath = content.getAttribute('data-base-path') || '/';
@@ -416,9 +455,14 @@ const { Content } = await service.render();
     });
   }
 
+  // Инициализация
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', fixImagePaths);
+    document.addEventListener('DOMContentLoaded', () => {
+      setupSmartBackNavigation();
+      fixImagePaths();
+    });
   } else {
+    setupSmartBackNavigation();
     fixImagePaths();
   }
 </script>

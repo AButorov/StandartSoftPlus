@@ -9,12 +9,22 @@ const sortedServices = services.sort((a, b) => a.data.order - b.data.order);
 
 <Layout title="Услуги - StandartSoft Plus">
   <!-- Hero секция -->
-  <section class="services-hero">
+  <section class="hero-section">
     <div class="hero-container">
-      <h1>Наши услуги</h1>
-      <p class="hero-tagline">
-        Комплексные решения для вашего бизнеса — от идеи до запуска
-      </p>
+      <div class="hero-content">
+        <h1>Наши услуги</h1>
+        <p class="slogan">Профессиональная разработка мобильных приложений и веб-сервисов</p>
+      </div>
+      <div class="hero-decoration">
+        <div class="decoration-circle">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+          </svg>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -64,15 +74,37 @@ const sortedServices = services.sort((a, b) => a.data.order - b.data.order);
 
 <style>
   /* Hero секция */
-  .services-hero {
-    padding: 5rem 2rem 3rem;
+  .hero-section {
+    padding: 5rem 2rem;
+    background: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
     background: linear-gradient(135deg, rgba(61, 17, 57, 0.03), rgba(229, 28, 39, 0.05));
-    text-align: center;
+    clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
   }
 
   .hero-container {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .hero-content {
+    text-align: left;
   }
 
   h1 {
@@ -80,23 +112,71 @@ const sortedServices = services.sort((a, b) => a.data.order - b.data.order);
     font-weight: 300;
     font-size: 3.5rem;
     color: var(--color-primary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     line-height: 1.2;
     background: none;
     -webkit-text-fill-color: var(--color-primary);
   }
 
-  .hero-tagline {
-    font-size: 1.25rem;
+  .slogan {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
     color: var(--color-text);
     opacity: 0.8;
-    line-height: 1.6;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  .hero-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .decoration-circle {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 60px rgba(61, 17, 57, 0.2);
+    position: relative;
+  }
+
+  .decoration-circle::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid var(--color-secondary);
+    opacity: 0.3;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 0;
+    }
+  }
+
+  .decoration-circle svg {
+    width: 100px;
+    height: 100px;
+    color: white;
   }
 
   /* Список услуг */
   .services-list {
     padding: 4rem 2rem;
-    background: white;
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.02), rgba(229, 28, 39, 0.02));
   }
 
   .services-container {
@@ -265,16 +345,35 @@ const sortedServices = services.sort((a, b) => a.data.order - b.data.order);
 
   /* Адаптивность */
   @media (max-width: 768px) {
-    .services-hero {
-      padding: 3rem 1rem 2rem;
+    .hero-section {
+      padding: 3rem 1rem;
+    }
+
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-content {
+      text-align: center;
     }
 
     h1 {
       font-size: 2.5rem;
     }
 
-    .hero-tagline {
-      font-size: 1.125rem;
+    .slogan {
+      font-size: 1rem;
+    }
+
+    .decoration-circle {
+      width: 150px;
+      height: 150px;
+    }
+
+    .decoration-circle svg {
+      width: 75px;
+      height: 75px;
     }
 
     .services-list {
