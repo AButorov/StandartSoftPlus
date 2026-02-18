@@ -1,6 +1,7 @@
 ---
 // src/pages/faq/index.astro
 import Layout from '../../layouts/Layout.astro';
+import CTABlock from '../../components/CTABlock.astro';
 
 const base = import.meta.env.BASE_URL;
 
@@ -414,14 +415,10 @@ function getIcon(iconName: string) {
     </div>
   </section>
 
-  <!-- CTA секция -->
-  <section class="cta-section">
-    <div class="container-narrow">
-      <h2>Остались вопросы?</h2>
-      <p>Свяжитесь с нами — мы с радостью всё объясним</p>
-      <a href={`${base}contacts/`} class="btn btn-primary">Связаться с нами</a>
-    </div>
-  </section>
+  <CTABlock 
+    title="Не нашли ответ на вопрос?"
+    description="Свяжитесь с нами, и мы подробно проконсультируем по любому вопросу"
+  />
 
   <script>
     // Аккордеон для секций FAQ

@@ -16,6 +16,22 @@ const jobsCollection = defineCollection({
   }),
 });
 
+const servicesCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    index: z.number(),
+    icon: z.string(),
+    materialIcon: z.string(),
+    title: z.string(),
+    price: z.string(),
+    duration: z.string(),
+    shortDescription: z.string(),
+    order: z.number(),
+    pubDate: z.string().optional(),
+  }),
+});
+
 export const collections = {
   jobs: jobsCollection,
+  services: servicesCollection,
 };

@@ -1,9 +1,15 @@
 ---
-// src/pages/services/index.astro
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import CTABlock from '../../components/CTABlock.astro';
+
+const base = import.meta.env.BASE_URL;
+const services = await getCollection('services');
+const sortedServices = services.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Layout title="Услуги - StandartSoft Plus">
+  <!-- Hero секция -->
   <section class="hero-section">
     <div class="hero-container">
       <div class="hero-content">
@@ -13,55 +19,52 @@ import Layout from '../../layouts/Layout.astro';
       <div class="hero-decoration">
         <div class="decoration-circle">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect>
           </svg>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="services-grid">
-    <div class="container">
-      <div class="service-card">
-        <div class="service-icon">📱</div>
-        <h3>Мобильные приложения</h3>
-        <p>Разработка нативных и кроссплатформенных мобильных приложений для iOS и Android</p>
-      </div>
+  <!-- Список услуг -->
+  <section class="services-list">
+    <div class="services-container">
+      <div class="services-grid">
+        {sortedServices.map((service) => (
+          <article class="service-card">
+            <a href={`${base}services/${service.slug}/`} class="service-card-link">
+              <div class="service-icon">{service.data.icon}</div>
+              <h3>{service.data.title}</h3>
+              <p class="service-description">{service.data.shortDescription}</p>
+              
+              <div class="service-meta">
+                <div class="meta-item">
+                  <span class="meta-label">Сроки:</span>
+                  <span class="meta-value">{service.data.duration}</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Стоимость:</span>
+                  <span class="meta-value price">{service.data.price}</span>
+                </div>
+              </div>
 
-      <div class="service-card">
-        <div class="service-icon">💻</div>
-        <h3>Веб-сервисы</h3>
-        <p>Создание современных веб-приложений и сервисов с использованием актуальных технологий</p>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">⚙️</div>
-        <h3>Backend & API</h3>
-        <p>Разработка серверной части приложений, REST API и интеграций</p>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">🎨</div>
-        <h3>UI/UX дизайн</h3>
-        <p>Проектирование интерфейсов с фокусом на удобство пользователя</p>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">🤖</div>
-        <h3>Автоматизация бизнеса</h3>
-        <p>CRM-системы и внутренние инструменты для оптимизации процессов</p>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">💡</div>
-        <h3>Консультации</h3>
-        <p>Аудит кода, выбор технологий и архитектура проектов</p>
+              <div class="service-footer">
+                <span class="service-link-text">Подробнее →</span>
+              </div>
+            </a>
+          </article>
+        ))}
       </div>
     </div>
   </section>
+
+  <CTABlock 
+    title="Не нашли нужную услугу?"
+    description="Свяжитесь с нами, и мы обсудим индивидуальное решение для вашего бизнеса"
+  />
 </Layout>
 
 <style>
@@ -115,6 +118,8 @@ import Layout from '../../layouts/Layout.astro';
     font-size: 1.125rem;
     color: var(--color-text);
     opacity: 0.8;
+    text-transform: none;
+    letter-spacing: normal;
   }
 
   .hero-decoration {
@@ -163,33 +168,45 @@ import Layout from '../../layouts/Layout.astro';
     color: white;
   }
 
-  /* Сетка услуг */
-  .services-grid {
+  /* Список услуг */
+  .services-list {
     padding: 4rem 2rem;
     background: linear-gradient(135deg, rgba(61, 17, 57, 0.02), rgba(229, 28, 39, 0.02));
   }
 
-  .container {
+  .services-container {
     max-width: 1200px;
     margin: 0 auto;
+  }
+
+  .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 2rem;
   }
 
   .service-card {
+    display: flex;
+  }
+
+  .service-card-link {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     background: white;
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(61, 17, 57, 0.08);
-    border: 1px solid rgba(61, 17, 57, 0.05);
+    text-decoration: none;
+    color: inherit;
     transition: all 0.3s ease;
+    border: 2px solid transparent;
   }
 
-  .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(61, 17, 57, 0.12);
-    border-color: var(--color-secondary);
+  .service-card-link:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(61, 17, 57, 0.15);
+    border-color: var(--color-primary);
   }
 
   .service-icon {
@@ -199,20 +216,134 @@ import Layout from '../../layouts/Layout.astro';
 
   .service-card h3 {
     font-family: var(--font-heading);
-    font-weight: 300;
+    font-weight: 400;
+    font-size: 1.375rem;
     color: var(--color-primary);
     margin-bottom: 1rem;
+    line-height: 1.4;
   }
 
-  .service-card p {
+  .service-description {
     color: var(--color-text);
     opacity: 0.8;
     line-height: 1.6;
-    margin: 0;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .service-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(61, 17, 57, 0.1);
+    border-bottom: 1px solid rgba(61, 17, 57, 0.1);
+    margin-bottom: 1rem;
+  }
+
+  .meta-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .meta-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-value {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .meta-value.price {
+    color: var(--color-secondary);
+    font-size: 1.125rem;
+  }
+
+  .service-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .service-link-text {
+    color: var(--color-primary);
+    font-weight: 600;
+    transition: transform 0.3s ease;
+    display: inline-block;
+  }
+
+  .service-card-link:hover .service-link-text {
+    transform: translateX(5px);
+  }
+
+  /* CTA блок */
+  .services-cta {
+    padding: 2rem;
+    background: white;
+  }
+
+  .cta-card {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent-1));
+    color: white;
+    padding: 3rem;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .cta-card h2 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 1rem;
+    background: none;
+    -webkit-text-fill-color: white;
+  }
+
+  .cta-card p {
+    color: white;
+    opacity: 0.95;
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .btn-primary {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
   }
 
   /* Адаптивность */
   @media (max-width: 768px) {
+    .hero-section {
+      padding: 3rem 1rem;
+    }
+
     .hero-container {
       grid-template-columns: 1fr;
       text-align: center;
@@ -226,6 +357,10 @@ import Layout from '../../layouts/Layout.astro';
       font-size: 2.5rem;
     }
 
+    .slogan {
+      font-size: 1rem;
+    }
+
     .decoration-circle {
       width: 150px;
       height: 150px;
@@ -236,8 +371,35 @@ import Layout from '../../layouts/Layout.astro';
       height: 75px;
     }
 
-    .container {
+    .services-list {
+      padding: 3rem 1rem;
+    }
+
+    .services-grid {
       grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .service-card-link {
+      padding: 1.5rem;
+    }
+
+    .cta-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .cta-card h2 {
+      font-size: 1.5rem;
+    }
+
+    .cta-card p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>
