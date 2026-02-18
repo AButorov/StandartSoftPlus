@@ -1,0 +1,3 @@
+- main page
+- resourses
+- providing (google yandex)
