@@ -1,0 +1,411 @@
+---
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const jobs = await getCollection('jobs');
+const sortedJobs = jobs.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="portfolio-preview" class="portfolio-carousel-section">
+  <div class="container">
+    <h2 class="text-center">Наши проекты</h2>
+    <p class="section-description">
+      Реализованные решения для бизнеса
+    </p>
+
+    <div class="carousel-wrapper">
+      <button class="pcarousel-btn pcarousel-btn-prev" aria-label="Предыдущий проект">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="pcarousel-container">
+        <div class="pcarousel-track">
+          {sortedJobs.map((job) => (
+            <article class="job-card">
+              <a href={`${base}jobs/${job.slug}/`} class="job-card-link">
+                <div class="job-tags">
+                  {job.data.tags.map((tag: string) => (
+                    <span class="job-tag">{tag}</span>
+                  ))}
+                </div>
+                <h3>{job.data.title}</h3>
+                <p class="job-description">{job.data.description}</p>
+                <p class="job-details">{job.data.details}</p>
+                <div class="job-footer">
+                  <span class="job-client">{job.data.client}</span>
+                  <span class="job-arrow">→</span>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <button class="pcarousel-btn pcarousel-btn-next" aria-label="Следующий проект">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="pcarousel-dots">
+      {sortedJobs.map((_, index) => (
+        <button
+          class={`pcarousel-dot ${index === 0 ? 'active' : ''}`}
+          data-index={index}
+          aria-label={`Перейти к проекту ${index + 1}`}
+        />
+      ))}
+    </div>
+
+    <div class="carousel-cta">
+      <a href={`${base}portfolio/`} class="btn btn-secondary">Все проекты</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .portfolio-carousel-section {
+    padding: 5rem 2rem;
+    background: linear-gradient(135deg, rgba(61, 17, 57, 0.02), rgba(229, 28, 39, 0.02));
+  }
+  
+  .section-description {
+    text-align: center;
+    color: var(--color-text);
+    opacity: 0.8;
+    margin-bottom: 3rem;
+    font-size: 1.125rem;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  .pcarousel-container {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .pcarousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 2rem;
+  }
+
+  .job-card {
+    flex: 0 0 calc(50% - 1rem);
+    min-width: 0;
+  }
+
+  .job-card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(61, 17, 57, 0.08);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(61, 17, 57, 0.06);
+  }
+
+  .job-card-link:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(61, 17, 57, 0.15);
+  }
+
+  .job-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .job-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    background: rgba(229, 28, 39, 0.08);
+    padding: 0.25rem 0.625rem;
+    border-radius: 4px;
+  }
+
+  .job-card h3 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .job-description {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .job-details {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    opacity: 0.7;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(61, 17, 57, 0.1);
+  }
+
+  .job-client {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    opacity: 0.8;
+  }
+
+  .job-arrow {
+    font-size: 1.5rem;
+    color: var(--color-secondary);
+    transition: transform 0.3s ease;
+  }
+
+  .job-card-link:hover .job-arrow {
+    transform: translateX(5px);
+  }
+
+  .pcarousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: 2px solid var(--color-primary);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    color: var(--color-primary);
+  }
+
+  .pcarousel-btn:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .pcarousel-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .pcarousel-btn-prev {
+    left: 0;
+  }
+
+  .pcarousel-btn-next {
+    right: 0;
+  }
+
+  .pcarousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .pcarousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(61, 17, 57, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .pcarousel-dot.active {
+    background: var(--color-primary);
+    width: 32px;
+    border-radius: 6px;
+  }
+
+  .carousel-cta {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .btn-secondary {
+    background: white;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .portfolio-carousel-section {
+      padding: 3rem 1rem;
+    }
+
+    .carousel-wrapper {
+      padding: 0 2.5rem;
+    }
+
+    .job-card {
+      flex: 0 0 100%;
+    }
+
+    .pcarousel-btn {
+      width: 40px;
+      height: 40px;
+    }
+
+    .pcarousel-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+</style>
+
+<script>
+  class PortfolioCarousel {
+    private track: HTMLElement;
+    private cards: NodeListOf<HTMLElement>;
+    private dots: NodeListOf<HTMLElement>;
+    private prevBtn: HTMLElement;
+    private nextBtn: HTMLElement;
+    private currentIndex = 0;
+    private cardsToShow = 2;
+
+    constructor() {
+      this.track = document.querySelector('.pcarousel-track') as HTMLElement;
+      this.cards = document.querySelectorAll('.job-card') as NodeListOf<HTMLElement>;
+      this.dots = document.querySelectorAll('.pcarousel-dot') as NodeListOf<HTMLElement>;
+      this.prevBtn = document.querySelector('.pcarousel-btn-prev') as HTMLElement;
+      this.nextBtn = document.querySelector('.pcarousel-btn-next') as HTMLElement;
+
+      this.updateCardsToShow();
+      this.init();
+
+      window.addEventListener('resize', () => {
+        this.updateCardsToShow();
+        this.updateCarousel();
+      });
+    }
+
+    private updateCardsToShow() {
+      this.cardsToShow = window.innerWidth <= 768 ? 1 : 2;
+    }
+
+    private init() {
+      this.prevBtn.addEventListener('click', () => this.prev());
+      this.nextBtn.addEventListener('click', () => this.next());
+
+      this.dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => this.goToSlide(index));
+      });
+
+      // Touch support
+      let startX = 0;
+      let currentX = 0;
+      let isDragging = false;
+
+      this.track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+
+      this.track.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        currentX = e.touches[0].clientX;
+      });
+
+      this.track.addEventListener('touchend', () => {
+        if (!isDragging) return;
+        const diff = startX - currentX;
+        if (Math.abs(diff) > 50) {
+          diff > 0 ? this.next() : this.prev();
+        }
+        isDragging = false;
+      });
+    }
+
+    private updateCarousel() {
+      const cardWidth = this.cards[0].offsetWidth;
+      const gap = 32; // 2rem
+      const offset = -(this.currentIndex * (cardWidth + gap));
+      this.track.style.transform = `translateX(${offset}px)`;
+
+      this.dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === this.currentIndex);
+      });
+    }
+
+    private next() {
+      const maxIndex = this.cards.length - this.cardsToShow;
+      if (this.currentIndex < maxIndex) {
+        this.currentIndex++;
+        this.updateCarousel();
+      }
+    }
+
+    private prev() {
+      if (this.currentIndex > 0) {
+        this.currentIndex--;
+        this.updateCarousel();
+      }
+    }
+
+    private goToSlide(index: number) {
+      const maxIndex = this.cards.length - this.cardsToShow;
+      this.currentIndex = Math.min(index, maxIndex);
+      this.updateCarousel();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new PortfolioCarousel());
+  } else {
+    new PortfolioCarousel();
+  }
+</script>

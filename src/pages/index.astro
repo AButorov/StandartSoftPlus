@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/hero.astro';
 import ServicesCarousel from '../components/ServicesCarousel.astro';
+import PortfolioCarousel from '../components/PortfolioCarousel.astro';
+import MidCTA from '../components/MidCTA.astro';
 import CTABlock from '../components/CTABlock.astro';
 
 const base = import.meta.env.BASE_URL;
@@ -24,23 +26,15 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
-  <!-- Карусель услуг -->
+<!-- Карусель услуг -->
   <ServicesCarousel />
 
-  <!-- Портфолио (краткая версия) -->
-  <section id="portfolio-preview" class="portfolio-preview-section">
-    <div class="container">
-      <h2 class="text-center">Наши проекты</h2>
-      <p class="section-description text-center">
-        Реализованные решения для бизнеса
-      </p>
-      
-      <div class="portfolio-cta">
-        <a href={`${base}portfolio/`} class="btn btn-primary">Смотреть портфолио</a>
-      </div>
-    </div>
-  </section>
+  <!-- Промежуточный CTA -->
+  <MidCTA />
 
+  <!-- Карусель проектов -->
+  <PortfolioCarousel />
+  
   <CTABlock 
     title="Свяжитесь с нами"
     description="Обсудим ваш проект и предложим оптимальное решение"
