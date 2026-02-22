@@ -1,0 +1,127 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="mid-cta-section">
+  <div class="container-narrow">
+    <p class="mid-cta-eyebrow">Готовы к результату?</p>
+    <h2 class="text-center">Воплотим вашу идею в рабочий продукт</h2>
+    <p class="lead text-center">
+      Мы берём проекты под ключ — от анализа требований до публикации в магазинах приложений. 
+      Фиксированные сроки, прозрачная стоимость, полная поддержка после запуска.
+    </p>
+    <div class="mid-cta-actions">
+      <a href={`${base}contact/`} class="btn btn-primary">Обсудить проект</a>
+      <a href={`${base}services/`} class="btn btn-secondary">Наши услуги</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mid-cta-section {
+    padding: 5rem 2rem;
+    background: white;
+  }
+
+  .container-narrow {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .mid-cta-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+    line-height: 1.25;
+  }
+
+  .lead {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--color-text);
+    opacity: 0.85;
+    margin-bottom: 2.5rem;
+  }
+
+  .mid-cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .btn-primary {
+    background: var(--gradient-brand);
+    color: white;
+    box-shadow: 0 4px 20px rgba(61, 17, 57, 0.15);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(61, 17, 57, 0.25);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-secondary);
+    border: 2px solid var(--color-secondary);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-secondary);
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .mid-cta-section {
+      padding: 3rem 1rem;
+    }
+
+    h2 {
+      font-size: 1.875rem;
+    }
+
+    .lead {
+      font-size: 1rem;
+    }
+
+    .mid-cta-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
+    }
+  }
+</style>

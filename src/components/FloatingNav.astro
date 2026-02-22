@@ -24,15 +24,16 @@ const currentPath = Astro.url.pathname;
         <a href={`${base}portfolio/`} class={`nav-link ${currentPath.includes('/portfolio') || currentPath.includes('/jobs') ? 'active' : ''}`}>Проекты</a>
       </li>
       <li class="nav-item has-dropdown">
-        <a href={`${base}resources/`} class={`nav-link ${currentPath.includes('/resources') || currentPath.includes('/faq') || currentPath.includes('/documents') ? 'active' : ''}`}>
+        <a href={`${base}resources/`} class={`nav-link ${currentPath.includes('/resources') ? 'active' : ''}`}>
           Ресурсы
           <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         </a>
         <div class="dropdown-menu">
-          <a href={`${base}faq/`} class="dropdown-link">Вопросы и ответы</a>
-          <a href={`${base}documents/`} class="dropdown-link">Документы</a>
+          <a href={`${base}resources/faq/`} class="dropdown-link">Вопросы и ответы</a>
+          <a href={`${base}resources/documents/`} class="dropdown-link">Документы</a>
+          <a href={`${base}resources/process/`} class="dropdown-link">Как мы работаем</a>
         </div>
       </li>
       <li class="nav-item">
@@ -62,8 +63,9 @@ const currentPath = Astro.url.pathname;
         </svg>
       </button>
       <div class="mobile-dropdown-content" id="mobileResourcesContent">
-        <a href={`${base}faq/`} class="mobile-link sub">Вопросы и ответы</a>
-        <a href={`${base}documents/`} class="mobile-link sub">Документы</a>
+        <a href={`${base}resources/faq/`} class="mobile-link sub">Вопросы и ответы</a>
+        <a href={`${base}resources/documents/`} class="mobile-link sub">Документы</a>
+        <a href={`${base}resources/process/`} class="mobile-link sub">Как мы работаем</a>
       </div>
     </div>
     <a href={`${base}contacts/`} class="mobile-link">Контакты</a>
@@ -179,66 +181,65 @@ const currentPath = Astro.url.pathname;
     transform: rotate(180deg);
   }
 
-/* Dropdown меню - ИСПРАВЛЕНО */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(61, 17, 57, 0.15);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.2s ease;
-  min-width: 220px;
-  padding: 0.5rem 0; /* Убираем боковые отступы */
-  margin-top: 0.5rem;
-  overflow: hidden; /* ДОБАВЛЕНО: обрезаем содержимое по границам */
-}
+  /* Dropdown меню */
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(61, 17, 57, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    min-width: 220px;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+    overflow: hidden;
+  }
 
-.nav-item.has-dropdown:hover .dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
+  .nav-item.has-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
 
-.dropdown-link {
-  display: block;
-  padding: 0.75rem 1.25rem;
-  color: var(--color-text);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 400;
-  text-transform: none;
-  letter-spacing: normal;
-  transition: all 0.2s ease;
-  position: relative;
-  width: 100%; /* ДОБАВЛЕНО: растягиваем на всю ширину */
-  box-sizing: border-box; /* ДОБАВЛЕНО: учитываем padding в ширине */
-}
+  .dropdown-link {
+    display: block;
+    padding: 0.75rem 1.25rem;
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: normal;
+    transition: all 0.2s ease;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
-/* Левая полоска при ховере */
-.dropdown-link::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 0;
-  background: var(--color-secondary);
-  transition: width 0.2s ease;
-  z-index: 1; /* ДОБАВЛЕНО: поверх фона */
-}
+  .dropdown-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: var(--color-secondary);
+    transition: width 0.2s ease;
+    z-index: 1;
+  }
 
-.dropdown-link:hover {
-  background: rgba(61, 17, 57, 0.05);
-  color: var(--color-secondary);
-}
+  .dropdown-link:hover {
+    background: rgba(61, 17, 57, 0.05);
+    color: var(--color-secondary);
+  }
 
-.dropdown-link:hover::before {
-  width: 4px;
-}
+  .dropdown-link:hover::before {
+    width: 4px;
+  }
 
   /* Мобильное меню */
   .mobile-toggle {
@@ -288,7 +289,7 @@ const currentPath = Astro.url.pathname;
   }
 
   .mobile-menu.active {
-    max-height: 500px;
+    max-height: 600px;
   }
 
   .mobile-link {
@@ -373,7 +374,7 @@ const currentPath = Astro.url.pathname;
   }
 
   .mobile-dropdown-content.active {
-    max-height: 200px;
+    max-height: 300px;
   }
 
   /* Адаптивность */
