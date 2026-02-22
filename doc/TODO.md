@@ -1,3 +1,4 @@
+- перенести "как мы работаем..."
 - main page
 - resourses
 - providing (google yandex)
