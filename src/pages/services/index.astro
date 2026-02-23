@@ -8,7 +8,10 @@ const services = await getCollection('services');
 const sortedServices = services.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Layout title="Услуги - StandartSoft Plus">
+<Layout 
+  title="Услуги — StandartSoft Plus"
+  description="Разработка мобильных приложений iOS и Android, веб-сервисов, PWA и автоматизация бизнес-процессов. Фиксированная цена, прозрачные сроки."
+>
   <!-- Hero секция -->
   <section class="hero-section">
     <div class="hero-container">

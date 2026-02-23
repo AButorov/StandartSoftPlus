@@ -22,7 +22,10 @@ const { job } = Astro.props;
 const { Content } = await job.render();
 ---
 
-<Layout title={`${job.data.title} - StandartSoft Plus`}>
+<Layout 
+  title={`${job.data.title} — StandartSoft Plus`}
+  description={`${job.data.description}. Клиент: ${job.data.client}. Стек: ${job.data.stack}.`}
+>
   <!-- Hero секция с асимметричным дизайном -->
   <section class="hero-section">
     <div class="hero-container">
