@@ -2,11 +2,7 @@
 
 ## SEO для StandartSoft Plus — что нужно сделать
 
-### 6. OG-изображение `public/images/og-image.png`
-
-Нужно создать картинку **1200×630px** с логотипом и слоганом. Используй Figma или любой графический редактор. Это значительно влияет на CTR при расшаривании в соцсетях.
-
----
+6. OG-изображение `public/images/og-image.png`
 
 ### Приоритет внедрения
 
@@ -20,6 +16,9 @@
 | JSON-LD                                         | среднее     | уже в Layout | +    |
 
 После деплоя — зарегистрировать сайт в **Google Search Console** и **Яндекс.Вебмастер**, загрузить туда sitemap.
+
+Google +
+Yandex -
 
 - resources (documents)
 - statistics
