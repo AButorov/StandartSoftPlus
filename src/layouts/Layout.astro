@@ -4,10 +4,21 @@ import FloatingNav from '../components/FloatingNav.astro';
 
 interface Props {
   title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
 }
 
-const { title = 'StandartSoft Plus' } = Astro.props;
+const {
+  title = 'StandartSoft Plus — Разработка мобильных приложений',
+  description = 'Студия разработки мобильных приложений и веб-сервисов. Создаём iOS, Android и кросс-платформенные решения для вашего бизнеса.',
+  ogImage = '/images/og-image.png',
+  canonical,
+} = Astro.props;
+
 const base = import.meta.env.BASE_URL;
+const siteUrl = 'https://standartsoftplus.com';
+const canonicalUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
 ---
 
 <!DOCTYPE html>
@@ -15,15 +26,49 @@ const base = import.meta.env.BASE_URL;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary SEO -->
     <title>{title}</title>
-    <link rel="icon" type="image/png" href={`${base}icon-nav.png`} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph (соцсети, мессенджеры) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="StandartSoft Plus" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href={`${base}favicon.png`} />
     <link rel="alternate icon" href={`${base}favicon.ico`} />
+    <link rel="apple-touch-icon" href={`${base}favicon.png`} />
+
+    <!-- JSON-LD структурированные данные -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "StandartSoft Plus",
+      "url": siteUrl,
+      "logo": `${siteUrl}/icon-nav.png`,
+      "description": description,
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": ["Russian", "English"]
+      }
+    })} />
   </head>
   <body>
-    <!-- Плавающая навигация -->
     <FloatingNav />
-    
-    <!-- Основной контент с отступом сверху -->
     <main class="main-content">
       <slot />
     </main>
@@ -33,12 +78,11 @@ const base = import.meta.env.BASE_URL;
 <style is:global>
   @import '../styles/global.css';
   @import '../styles/markdown-images.css';
-  
-  /* Отступ для контента под навигацией */
+
   .main-content {
     padding-top: 6rem;
   }
-  
+
   @media (max-width: 768px) {
     .main-content {
       padding-top: 5rem;

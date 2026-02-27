@@ -22,7 +22,10 @@ const { service } = Astro.props;
 const { Content } = await service.render();
 ---
 
-<Layout title={`${service.data.title} - StandartSoft Plus`}>
+<Layout 
+  title={`${service.data.title} — StandartSoft Plus`}
+  description={service.data.shortDescription}
+>
   <!-- Hero секция -->
   <section class="service-hero">
     <div class="hero-container">
