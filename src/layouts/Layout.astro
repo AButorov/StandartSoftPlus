@@ -53,7 +53,7 @@ const canonicalUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
     <link rel="apple-touch-icon" href={`${base}favicon.png`} />
 
     <!-- JSON-LD структурированные данные -->
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({  
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "StandartSoft Plus",

@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ChangeEvent } from "react";
+import { useState } from "react";
 
 interface FormData {
   name: string;
@@ -78,7 +78,7 @@ export default function ContactFormCard() {
     }
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (!validateContact(formData.contactValue)) {
@@ -203,7 +203,7 @@ export default function ContactFormCard() {
     }
   };
 
-  const handleContactTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleContactTypeChange = (e: { target: HTMLSelectElement }) => {
     setFormData({
       ...formData,
       contactType: e.target.value as ContactType,
