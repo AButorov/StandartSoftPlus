@@ -18,7 +18,7 @@
 После деплоя — зарегистрировать сайт в **Google Search Console** и **Яндекс.Вебмастер**, загрузить туда sitemap.
 
 Google +
-Yandex -
+Yandex +
 
 - resources (documents)
 - statistics
