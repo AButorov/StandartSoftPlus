@@ -7,6 +7,7 @@ interface Props {
   description?: string;
   ogImage?: string;
   canonical?: string;
+  noindex?: boolean;
 }
 
 const {
@@ -14,6 +15,7 @@ const {
   description = 'Студия разработки мобильных приложений и веб-сервисов. Создаём iOS, Android и кросс-платформенные решения для вашего бизнеса.',
   ogImage = '/images/og-image.png',
   canonical,
+  noindex = false,
 } = Astro.props;
 
 const siteUrl = 'https://standartsoftplus.com';
@@ -25,6 +27,9 @@ const canonicalUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Robots -->
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Primary SEO -->
     <title>{title}</title>
@@ -55,7 +60,7 @@ const canonicalUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- JSON-LD структурированные данные -->
-    <script is:inline type="application/ld+json" set:html={JSON.stringify({  
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "StandartSoft Plus",

@@ -2,19 +2,24 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
-
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://standartsoftplus.com", // твой домен
-  base: "/", // убираем base path
+  site: "https://standartsoftplus.com",
+  base: "/",
+  trailingSlash: "always",
 
   server: {
     host: "0.0.0.0",
     port: 4321,
   },
 
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    sitemap({
+      filter: (page) => !page.includes("/resources/documents"),
+    }),
+  ],
 
   vite: {
     plugins: [tailwindcss()],
